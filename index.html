@@ -53,6 +53,18 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sa
 .note { font-size: 11px; color: #888; line-height: 1.5; padding: 6px 0; }
 h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; padding: 1rem 0 0.5rem; }
 .subtitle { font-size: 11px; color: #888; margin-bottom: 1rem; }
+
+.km-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 32px; font-size: 11px; font-weight: 700;
+  border-radius: 6px; border: 0.5px solid #ccc;
+  background: #f0ede8; color: #555; cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+.km-btn:active { background: #D85A30; color: #fff; border-color: #D85A30; }
+.km-wrap { display: flex; align-items: center; gap: 4px; width: 100%; }
+.km-wrap input { flex: 1; min-width: 0; width: 0; }
 </style>
 </head>
 <body>
@@ -145,132 +157,220 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
 
 <div id="revenue" class="page">
   <div class="info-box"><strong>レベニューボーナス：</strong>前月比のダイヤ数増加率に応じて追加ボーナスが発生します。</div>
+
   <div class="section-title">レベル別条件と報酬率</div>
   <div class="rev-lv-card">
     <div class="rev-lv-badge" style="background:#EAF3DE; color:#3B6D11;">Lv1</div>
-    <div class="rev-info"><div class="rev-cond">先月比 ≥ 100%</div><div class="rev-rate">報酬ダイヤ × 9%</div></div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 100%</div>
+      <div class="rev-rate">8% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">100%達成</div>
   </div>
   <div class="rev-lv-card">
     <div class="rev-lv-badge" style="background:#E6F1FB; color:#185FA5;">Lv2</div>
-    <div class="rev-info"><div class="rev-cond">先月比 ≥ 110%</div><div class="rev-rate">報酬ダイヤ × 11%</div></div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 110%</div>
+      <div class="rev-rate">10% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">110%達成</div>
   </div>
   <div class="rev-lv-card">
     <div class="rev-lv-badge" style="background:#FAEEDA; color:#854F0B;">Lv3</div>
-    <div class="rev-info"><div class="rev-cond">先月比 ≥ 120%</div><div class="rev-rate">報酬ダイヤ × 13%</div></div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 120%</div>
+      <div class="rev-rate">12% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">120%達成</div>
   </div>
   <div class="rev-lv-card">
     <div class="rev-lv-badge" style="background:#FAECE7; color:#993C1D;">Lv4</div>
-    <div class="rev-info"><div class="rev-cond">先月比 ≥ 130%</div><div class="rev-rate">報酬ダイヤ × 15%</div></div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 140%</div>
+      <div class="rev-rate">15% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">140%達成</div>
   </div>
 
-  <div class="section-title">計算例（先月10M → 今月の変化）</div>
-  <div class="info-box" style="margin-bottom:0.75rem;">
-    <strong>計算式：</strong>今月のダイヤ数 × レベルの報酬率 × 1ダイヤのレート（$）× 為替レート（¥）<br>
-    <span style="font-size:11px; color:#888;">※ 報酬率はLv1=9%・Lv2=11%・Lv3=13%・Lv4=15%</span>
+  <div class="info-box" style="margin-top:0.75rem;">
+    <strong>エージェンシー受取額について：</strong><br>
+    会社全体のレベニュー額をもとに、エージェンシーへの支払額が算出されます。<br>
+    <span style="font-size:11px; color:#888;">※ Lv1とLv2はどちらも先月比100%以上で発生。Lv2は上位ティアとしてより高い報酬率が適用されます。</span>
   </div>
+
+  <div class="section-title">計算例（先月10M基準）</div>
   <div class="card">
     <div class="card-row">
-      <span class="card-label">今月10M達成（100%・Lv1）</span>
+      <span class="card-label">今月10M（100%・Lv1/8%）</span>
       <span class="card-val accent" id="rev-ex1">計算中...</span>
     </div>
     <div class="card-row">
-      <span class="card-label">今月11M達成（110%・Lv2）</span>
+      <span class="card-label">今月11M（110%・Lv2/10%）</span>
       <span class="card-val accent" id="rev-ex2">計算中...</span>
     </div>
     <div class="card-row">
-      <span class="card-label">今月12M達成（120%・Lv3）</span>
+      <span class="card-label">今月12M（120%・Lv3/12%）</span>
       <span class="card-val accent" id="rev-ex3">計算中...</span>
     </div>
     <div class="card-row">
-      <span class="card-label">今月13M達成（130%・Lv4）</span>
+      <span class="card-label">今月14M（140%・Lv4/15%）</span>
       <span class="card-val accent" id="rev-ex4">計算中...</span>
     </div>
   </div>
 
-  <div class="section-title" style="margin-top:1rem;">レベニュー計算ツール</div>
-  <div class="info-box">今月・先月のダイヤ数を入力すると、適用レベルと円換算収益を自動計算します。</div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:0.75rem;">
-    <div>
-      <div style="font-size:11px; color:#888; margin-bottom:4px;">先月のダイヤ数</div>
-      <input id="rev-last" type="text" placeholder="例: 10M または 10000000"
-        style="width:100%; padding:8px 12px; font-size:13px; border:0.5px solid #ccc; border-radius:8px; background:#fff; outline:none;"
-        oninput="calcRevenue()">
-    </div>
-    <div>
-      <div style="font-size:11px; color:#888; margin-bottom:4px;">今月のダイヤ数</div>
-      <input id="rev-this" type="text" placeholder="例: 11M または 11000000"
-        style="width:100%; padding:8px 12px; font-size:13px; border:0.5px solid #ccc; border-radius:8px; background:#fff; outline:none;"
-        oninput="calcRevenue()">
-    </div>
-  </div>
-  <div id="rev-result" style="display:none; background:#fff; border:0.5px solid #ddd; border-radius:12px; padding:1rem; margin-bottom:0.75rem;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-      <span style="font-size:13px; color:#666;">先月比</span>
-      <span id="rev-ratio" style="font-size:16px; font-weight:500; color:#1a1a1a;">—</span>
-    </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-      <span style="font-size:13px; color:#666;">適用レベル</span>
-      <span id="rev-level" style="font-size:13px; font-weight:500;">—</span>
-    </div>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-      <span style="font-size:13px; color:#666;">報酬率</span>
-      <span id="rev-rate-result" style="font-size:13px; color:#666;">—</span>
-    </div>
-    <div style="border-top:0.5px solid #eee; padding-top:8px; margin-top:4px; display:flex; justify-content:space-between; align-items:baseline;">
-      <span style="font-size:13px; font-weight:500; color:#1a1a1a;">レベニュー収益（円換算）</span>
-      <span id="rev-jpy" style="font-size:20px; font-weight:500; color:#D85A30;">—</span>
-    </div>
-  </div>
-  <p class="note">※ K=1,000・M=1,000,000で入力可。為替レート $1=¥158.938 で計算。</p>
+  <p class="note">※ 実際の計算は報酬計算タブの「② レベニュー計算」から行えます。</p>
 </div>
 
 <div id="calc" class="page">
-  <div class="info-box">ライバーごとにダイヤ数を入力すると、レベル別の円換算報酬をまとめて計算します。<br><span style="font-size:11px;">K・M表記も入力可（例：500K、1.2M）</span></div>
 
-  <div class="section-title">ライバー別入力</div>
+  <!-- ① 目標設定 -->
+  <div class="section-title">① 目標設定</div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">目標獲得ダイヤ数</div>
+      <div class="km-wrap">
+        <input id="goal-diamond" type="text" placeholder="例: 5M"
+          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+          oninput="calcGoal()">
+        <button class="km-btn" onclick="appendKM('goal-diamond','K',calcGoal)">K</button>
+        <button class="km-btn" onclick="appendKM('goal-diamond','M',calcGoal)">M</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">目標報酬金額（円）</div>
+      <input id="goal-reward" type="text" placeholder="例: 100000"
+        style="width:100%;padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+        oninput="calcGoal()">
+    </div>
+    <div id="goal-result" style="display:none;background:#f5f5f3;border-radius:8px;padding:10px;margin-top:10px;">
+      <div id="goal-rows-diamond" style="margin-bottom:6px;"></div>
+      <div id="goal-rows-reward"></div>
+    </div>
+  </div>
+
+  <!-- ② レベニュー計算 -->
+  <div class="section-title">② レベニュー計算</div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">先月の獲得ダイヤ数</div>
+      <div class="km-wrap">
+        <input id="rev-total-last" type="text" placeholder="例: 10M"
+          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+          oninput="calcRevTotal()">
+        <button class="km-btn" onclick="appendKM('rev-total-last','K',calcRevTotal)">K</button>
+        <button class="km-btn" onclick="appendKM('rev-total-last','M',calcRevTotal)">M</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">今月の獲得ダイヤ数</div>
+      <div class="km-wrap">
+        <input id="rev-total-curr" type="text" placeholder="例: 12M"
+          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+          oninput="calcRevTotal()">
+        <button class="km-btn" onclick="appendKM('rev-total-curr','K',calcRevTotal)">K</button>
+        <button class="km-btn" onclick="appendKM('rev-total-curr','M',calcRevTotal)">M</button>
+      </div>
+    </div>
+    <div id="rev-total-result" style="display:none;background:#f5f5f3;border-radius:8px;padding:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid #e0ddd8;">
+        <span style="font-size:12px;color:#666;">先月比</span>
+        <span id="rev-total-ratio" style="font-size:14px;font-weight:600;color:#1a1a1a;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid #e0ddd8;">
+        <span style="font-size:12px;color:#666;">適用レベル</span>
+        <span id="rev-total-level" style="font-size:13px;font-weight:500;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0 4px;">
+        <span style="font-size:12px;color:#854F0B;font-weight:600;">エージェンシー受取額</span>
+        <span id="rev-total-agency" style="font-size:18px;font-weight:700;color:#854F0B;"></span>
+      </div>
+    </div>
+    <div id="rev-total-none" style="display:none;font-size:12px;color:#aaa;padding:6px 0;text-align:center;"></div>
+  </div>
+
+  <!-- ③ ライバー別報酬 -->
+  <div class="section-title">③ ライバー別報酬</div>
+  <div style="font-size:11px;color:#888;margin-bottom:8px;">配信日数・時間・ダイヤを入力するとアクティブLvが自動判定されます</div>
   <div id="liver-rows"></div>
   <button onclick="addLiverRow()"
-    style="width:100%; padding:8px; font-size:13px; font-weight:500; border:0.5px dashed #ccc; border-radius:8px; background:#f5f5f3; color:#666; cursor:pointer; margin-bottom:1rem;">
+    style="width:100%;padding:9px;font-size:13px;font-weight:500;border:0.5px dashed #ccc;border-radius:8px;background:#f5f5f3;color:#666;cursor:pointer;margin-bottom:0.75rem;">
     ＋ ライバーを追加
   </button>
-
-  <div style="display:flex; gap:6px; margin-bottom:1rem;">
+  <div style="display:flex;gap:8px;margin-bottom:1rem;">
     <button onclick="calcAll()"
-      style="flex:1; padding:10px; font-size:13px; font-weight:500; border:none; border-radius:8px; background:#D85A30; color:#fff; cursor:pointer;">
+      style="flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#D85A30;color:#fff;cursor:pointer;">
       計算する
     </button>
     <button onclick="clearAll()"
-      style="padding:10px 14px; font-size:13px; border:0.5px solid #ccc; border-radius:8px; background:#fff; color:#666; cursor:pointer;">
+      style="padding:11px 16px;font-size:13px;border:0.5px solid #ccc;border-radius:10px;background:#fff;color:#666;cursor:pointer;">
       クリア
     </button>
   </div>
 
+  <!-- ④⑤ 結果 -->
   <div id="multi-result" style="display:none;">
-    <div class="section-title">計算結果</div>
+    <div class="section-title">④ ライバー別内訳</div>
     <div id="multi-cards"></div>
-    <div id="multi-total" style="background:#FAECE7; border-radius:12px; padding:1rem; margin-top:0.5rem; display:flex; justify-content:space-between; align-items:baseline;">
-      <span style="font-size:13px; font-weight:500; color:#993C1D;">全ライバー合計</span>
-      <span id="total-jpy" style="font-size:22px; font-weight:500; color:#D85A30;"></span>
+
+    <div class="section-title">⑤ 着地計算（総合計）</div>
+    <div style="background:#FAECE7;border-radius:12px;padding:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #E8BFB5;">
+        <span style="font-size:12px;color:#993C1D;">アクティブ合計（Lv1基準）</span>
+        <span id="total-active" style="font-size:15px;font-weight:600;color:#993C1D;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #E8BFB5;">
+        <span style="font-size:12px;color:#993C1D;">レベニュー受取</span>
+        <span id="total-revenue" style="font-size:15px;font-weight:600;color:#993C1D;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;">
+        <span style="font-size:13px;font-weight:600;color:#993C1D;">総合計</span>
+        <span id="total-jpy" style="font-size:28px;font-weight:700;color:#D85A30;"></span>
+      </div>
     </div>
-    <p class="note" style="margin-top:0.5rem;">※ 各ライバーの達成レベルを選択して再計算できます。為替 $1=¥158.938。</p>
+    <p class="note" style="margin-top:0.5rem;">※ アクティブはLv1基準。レベニューは②の入力を反映。</p>
   </div>
 </div>
-
 </div>
 
 <script>
 const lvData = {
-  1: { days: '18日以上', hours: '40時間以上', rate: '$0.0002', rateNum: 0.0002 },
-  2: { days: '20日以上', hours: '80時間以上', rate: '$0.0003', rateNum: 0.0003 },
-  3: { days: '20日以上', hours: '100時間以上', rate: '$0.0004', rateNum: 0.0004 },
-  4: { days: '22日以上', hours: '120時間以上', rate: '$0.0005', rateNum: 0.0005 },
-  5: { days: '24日以上', hours: '140時間以上', rate: '$0.0006', rateNum: 0.0006 }
+  1: { days: '18日以上', hours: '40時間以上',  rate: '$0.0002', rateNum: 0.0002, minDays: 18, minHours: 40,  minDiamond: 150000 },
+  2: { days: '20日以上', hours: '80時間以上',  rate: '$0.0003', rateNum: 0.0003, minDays: 20, minHours: 80,  minDiamond: 150000 },
+  3: { days: '20日以上', hours: '100時間以上', rate: '$0.0004', rateNum: 0.0004, minDays: 20, minHours: 100, minDiamond: 150000 },
+  4: { days: '22日以上', hours: '120時間以上', rate: '$0.0005', rateNum: 0.0005, minDays: 22, minHours: 120, minDiamond: 150000 },
+  5: { days: '24日以上', hours: '140時間以上', rate: '$0.0006', rateNum: 0.0006, minDays: 24, minHours: 140, minDiamond: 150000 }
 };
+// 配信日数・時間・ダイヤから達成Lvを判定
+function getActiveLv(days, hours, diamonds) {
+  if (!days || !hours || !diamonds) return 0;
+  for (var lv = 5; lv >= 1; lv--) {
+    var d = lvData[lv];
+    if (diamonds >= d.minDiamond && days >= d.minDays && hours >= d.minHours) return lv;
+  }
+  return 0; // 未達
+}
 const tableRows = [150000,200000,300000,400000,500000,600000,700000,800000,900000,1000000,1500000,2000000,2500000,3000000];
 const FX = 158.938;
 const lvColors  = ['#EAF3DE','#E6F1FB','#FAEEDA','#FAECE7','#EEEDFE'];
 const lvTColors = ['#3B6D11','#185FA5','#854F0B','#993C1D','#534AB7'];
-const revRates  = { 1: 0.09, 2: 0.11, 3: 0.13, 4: 0.15 };
+// レベニュー条件: { minRatio, bonusRate }
+const revLevels = [
+  { lv: 4, minRatio: 1.40, rate: 0.0015, label: 'Lv4 / 15%', bg: '#FAECE7', tc: '#993C1D' },
+  { lv: 3, minRatio: 1.20, rate: 0.0012, label: 'Lv3 / 12%', bg: '#FAEEDA', tc: '#854F0B' },
+  { lv: 2, minRatio: 1.10, rate: 0.0010, label: 'Lv2 / 10%', bg: '#E6F1FB', tc: '#185FA5' },
+  { lv: 1, minRatio: 1.00, rate: 0.0008, label: 'Lv1 / 8%',  bg: '#EAF3DE', tc: '#3B6D11' },
+];
+const revRates  = { 1: 0.0008, 2: 0.0010, 3: 0.0012, 4: 0.0015 };
+
+
+function appendKM(inputId, unit, triggerFn) {
+  var el = document.getElementById(inputId);
+  if (!el) return;
+  var v = el.value.trim().toUpperCase().replace(/[KM]$/, '');
+  el.value = v ? v + unit : '';
+  if (triggerFn) triggerFn();
+  else el.dispatchEvent(new Event('input'));
+}
 
 // K/M表記を数値に変換
 function parseD(v) {
@@ -313,6 +413,22 @@ function showLv(lv) {
   }).join('');
 }
 
+// 会社全体レベニュー = ダイヤ × ボーナス率（ドル時価）
+function revInternal(diamonds, rate) {
+  return diamonds * rate;
+}
+// エージェンシー受取 = 会社全体 ÷ 2 × 60% × FX（円換算）
+function revAgency(internal) {
+  return internal / 2 * 0.6 * FX;
+}
+function getRevLevel(ratio) {
+  if (ratio >= 1.40) return revLevels[0]; // Lv4
+  if (ratio >= 1.20) return revLevels[1]; // Lv3
+  if (ratio >= 1.10) return revLevels[2]; // Lv2
+  if (ratio >= 1.00) return revLevels[3]; // Lv1
+  return null;
+}
+
 // ===== レベニュー計算 =====
 function calcRevenue() {
   const last = parseD(document.getElementById('rev-last').value);
@@ -320,48 +436,80 @@ function calcRevenue() {
   const res = document.getElementById('rev-result');
   if (!last || !curr || last <= 0) { res.style.display='none'; return; }
   const ratio = curr / last;
-  let appliedLv = 0;
-  if      (ratio >= 1.30) appliedLv = 4;
-  else if (ratio >= 1.20) appliedLv = 3;
-  else if (ratio >= 1.10) appliedLv = 2;
-  else if (ratio >= 1.00) appliedLv = 1;
   res.style.display = 'block';
   document.getElementById('rev-ratio').textContent = (ratio * 100).toFixed(1) + '%';
-  if (appliedLv === 0) {
+  const lvObj = getRevLevel(ratio);
+  if (!lvObj) {
     document.getElementById('rev-level').textContent = '対象外（先月比100%未満）';
     document.getElementById('rev-rate-result').textContent = '—';
+    document.getElementById('rev-internal').textContent = '—';
     document.getElementById('rev-jpy').textContent = '¥0';
     return;
   }
-  const rate = revRates[appliedLv];
-  // レベニュー計算式: 今月ダイヤ × 報酬率 × 1ダイヤのアクティブタスクレート($0.0002基準) × FX
-  // ここでは「ダイヤ × 報酬率 × 0.75円」のシンプル換算（1ダイヤ=0.75円ベース）
-  const jpy = Math.round(curr * rate * 0.75);
+  const internal = revInternal(curr, lvObj.rate);
+  const agency   = revAgency(internal);
   document.getElementById('rev-level').innerHTML =
-    `<span style="background:${lvColors[appliedLv-1]};color:${lvTColors[appliedLv-1]};padding:2px 10px;border-radius:999px;font-size:12px;">Lv${appliedLv}</span>`;
-  document.getElementById('rev-rate-result').textContent = `報酬ダイヤ × ${(rate*100).toFixed(0)}%`;
-  document.getElementById('rev-jpy').textContent = '¥' + jpy.toLocaleString();
+    `<span style="background:${lvObj.bg};color:${lvObj.tc};padding:2px 10px;border-radius:999px;font-size:12px;">${lvObj.label}</span>`;
+  document.getElementById('rev-rate-result').textContent = lvObj.label.split('/')[1].trim();
+  document.getElementById('rev-internal').textContent = '¥' + Math.round(internal).toLocaleString();
+  document.getElementById('rev-jpy').textContent = '¥' + Math.round(agency).toLocaleString();
 }
 
-// 計算例をJSで描画（円換算）
+// 計算例をJSで描画（新計算式）
 function renderRevExamples() {
-  const base = 10000000; // 先月10M
+  // 先月10M基準
   const examples = [
-    { curr: 10000000, lv: 1 },
-    { curr: 11000000, lv: 2 },
-    { curr: 12000000, lv: 3 },
-    { curr: 13000000, lv: 4 },
+    { curr: 10000000, rate: 0.0008 }, // Lv1 100%
+    { curr: 11000000, rate: 0.0010 }, // Lv2 110%
+    { curr: 12000000, rate: 0.0012 }, // Lv3 120%
+    { curr: 14000000, rate: 0.0015 }, // Lv4 140%
   ];
   examples.forEach((ex, i) => {
     const el = document.getElementById('rev-ex' + (i+1));
     if (!el) return;
-    const rate = revRates[ex.lv];
-    const jpy = Math.round(ex.curr * rate * 0.75);
-    el.textContent = '¥' + jpy.toLocaleString();
+    const agency = revAgency(revInternal(ex.curr, ex.rate));
+    el.textContent = '¥' + Math.round(agency).toLocaleString();
   });
 }
 
-// ===== 複数名報酬計算 =====
+
+// ライバー行リアルタイムLvプレビュー
+function previewLv(id) {
+  var days     = parseFloat(document.getElementById('ldays-' + id).value) || 0;
+  var hours    = parseFloat(document.getElementById('lhours-' + id).value) || 0;
+  var diamonds = parseD(document.getElementById('ldiamond-' + id).value);
+  var preview  = document.getElementById('lv-preview-' + id);
+  if (!preview) return;
+  if (!days && !hours && !diamonds) { preview.innerHTML = ''; return; }
+  var lv = getActiveLv(days, hours, diamonds || 0);
+  var html_str = '<div style="display:flex;align-items:center;gap:6px;padding:5px 2px;">';
+  [1,2,3,4,5].forEach(function(l) {
+    var d = lvData[l];
+    var daysOk  = days  >= d.minDays;
+    var hoursOk = hours >= d.minHours;
+    var diaOk   = diamonds && diamonds >= d.minDiamond;
+    var allOk   = daysOk && hoursOk && diaOk;
+    var isTarget = (l === lv);
+    html_str += '<div style="flex:1;text-align:center;padding:5px 2px;border-radius:7px;' +
+      (isTarget ? 'background:' + lvColors[l-1] + ';' : 'background:#f5f5f3;') + '">' +
+      '<div style="font-size:10px;font-weight:' + (isTarget ? '700' : '500') + ';color:' + (isTarget ? lvTColors[l-1] : '#bbb') + ';">Lv' + l + '</div>' +
+      '<div style="font-size:9px;color:' + (isTarget ? lvTColors[l-1] : '#ccc') + ';margin-top:1px;">' + (isTarget ? '✓ 達成' : (allOk ? '✓' : '–')) + '</div>' +
+    '</div>';
+  });
+  html_str += '</div>';
+  if (lv > 0) {
+    var jpy = Math.round((diamonds||0) * lvData[lv].rateNum * FX);
+    html_str += '<div style="background:' + lvColors[lv-1] + ';border-radius:8px;padding:6px 10px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span style="font-size:11px;font-weight:600;color:' + lvTColors[lv-1] + ';">Lv' + lv + ' 確定 ✓</span>' +
+      '<span style="font-size:16px;font-weight:700;color:' + lvTColors[lv-1] + ';">¥' + jpy.toLocaleString() + '</span>' +
+    '</div>';
+  } else if (days || hours || diamonds) {
+    html_str += '<div style="background:#f0ede8;border-radius:8px;padding:6px 10px;margin-top:4px;text-align:center;font-size:11px;color:#aaa;">条件未達（Lv対象外）</div>';
+  }
+  preview.innerHTML = html_str;
+}
+
+// ===== ライバー別報酬計算 =====
 let liverCount = 0;
 
 function addLiverRow() {
@@ -369,20 +517,38 @@ function addLiverRow() {
   const id = liverCount;
   const div = document.createElement('div');
   div.id = 'liver-row-' + id;
-  div.style.cssText = 'background:#fff; border:0.5px solid #ddd; border-radius:10px; padding:0.75rem; margin-bottom:0.5rem;';
-  div.innerHTML = `
-    <div style="display:flex; gap:6px; margin-bottom:6px;">
-      <input type="text" placeholder="ライバー名" id="lname-${id}"
-        style="flex:1; padding:6px 10px; font-size:13px; border:0.5px solid #ccc; border-radius:7px; background:#fafafa; outline:none;">
-      <input type="text" placeholder="@TikTok ID" id="lid-${id}"
-        style="flex:1; padding:6px 10px; font-size:13px; border:0.5px solid #ccc; border-radius:7px; background:#fafafa; outline:none; color:#185FA5;">
-    </div>
-    <div style="display:flex; align-items:center; gap:6px;">
-      <input type="text" placeholder="ダイヤ数 例: 500K / 1.2M" id="ldiamond-${id}"
-        style="flex:1; padding:6px 10px; font-size:13px; border:0.5px solid #ccc; border-radius:7px; background:#fafafa; outline:none;">
-      <button onclick="removeLiverRow(${id})"
-        style="padding:6px 10px; font-size:12px; border:0.5px solid #eee; border-radius:7px; background:#f5f5f3; color:#aaa; cursor:pointer;">✕</button>
-    </div>`;
+  div.style.cssText = 'background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:0.75rem;margin-bottom:0.5rem;';
+  div.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+      '<span style="font-size:11px;font-weight:600;color:#555;">ライバー ' + id + '</span>' +
+      '<button onclick="removeLiverRow(' + id + ')" style="width:26px;height:26px;font-size:13px;border:none;border-radius:6px;background:#f0ede8;color:#bbb;cursor:pointer;line-height:1;">✕</button>' +
+    '</div>' +
+    '<div style="display:flex;gap:6px;margin-bottom:8px;">' +
+      '<input type="text" placeholder="ライバー名" id="lname-' + id + '" style="flex:1;min-width:0;padding:8px 10px;font-size:13px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;">' +
+      '<input type="text" placeholder="@TikTok ID" id="lid-' + id + '" style="flex:1;min-width:0;padding:8px 10px;font-size:12px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;color:#185FA5;">' +
+    '</div>' +
+    '<div style="background:#f8f7f4;border-radius:8px;padding:8px 10px;margin-bottom:6px;">' +
+      '<div style="font-size:10px;font-weight:600;color:#888;margin-bottom:6px;letter-spacing:0.04em;">配信実績</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;">' +
+        '<div>' +
+          '<div style="font-size:10px;color:#888;margin-bottom:3px;">配信日数（日）</div>' +
+          '<input type="number" placeholder="例: 20" id="ldays-' + id + '" min="0" max="31" oninput="previewLv(' + id + ')" style="width:100%;padding:8px 10px;font-size:14px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:10px;color:#888;margin-bottom:3px;">配信時間（h）</div>' +
+          '<input type="number" placeholder="例: 80" id="lhours-' + id + '" min="0" oninput="previewLv(' + id + ')" style="width:100%;padding:8px 10px;font-size:14px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
+        '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div style="font-size:10px;color:#888;margin-bottom:3px;">当月ダイヤ数</div>' +
+        '<div class="km-wrap">' +
+          '<input type="text" placeholder="例: 1.2M" id="ldiamond-' + id + '" oninput="previewLv(' + id + ')" style="padding:8px 10px;font-size:14px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
+          '<button class="km-btn" onclick="appendKM(\'ldiamond-' + id + '\',\'K\',function(){previewLv(' + id + ')})">K</button>' +
+          '<button class="km-btn" onclick="appendKM(\'ldiamond-' + id + '\',\'M\',function(){previewLv(' + id + ')})">M</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div id="lv-preview-' + id + '"></div>';
   document.getElementById('liver-rows').appendChild(div);
 }
 
@@ -394,51 +560,141 @@ function removeLiverRow(id) {
 function calcAll() {
   const rows = document.getElementById('liver-rows').querySelectorAll('[id^="liver-row-"]');
   const results = [];
-  rows.forEach(row => {
-    const rowId = row.id.replace('liver-row-', '');
-    const name    = (document.getElementById('lname-' + rowId)?.value || '').trim() || 'ライバー' + rowId;
-    const tikId   = (document.getElementById('lid-' + rowId)?.value || '').trim();
-    const diamonds = parseD(document.getElementById('ldiamond-' + rowId)?.value);
-    if (diamonds && diamonds > 0) results.push({ name, tikId, diamonds });
+  rows.forEach(function(row) {
+    const rowId    = row.id.replace('liver-row-', '');
+    const name     = (document.getElementById('lname-' + rowId).value || '').trim() || 'ライバー' + rowId;
+    const tikId    = (document.getElementById('lid-' + rowId).value || '').trim();
+    const diamonds = parseD(document.getElementById('ldiamond-' + rowId).value);
+    const days     = parseFloat(document.getElementById('ldays-' + rowId).value) || 0;
+    const hours    = parseFloat(document.getElementById('lhours-' + rowId).value) || 0;
+    if (diamonds && diamonds > 0) results.push({ name: name, tikId: tikId, diamonds: diamonds, days: days, hours: hours });
   });
   const res = document.getElementById('multi-result');
   if (results.length === 0) { res.style.display = 'none'; return; }
   res.style.display = 'block';
-  let totalJpy = 0;
-  const cardsHtml = results.map(r => {
-    const lvHtml = [1,2,3,4,5].map(lv => {
-      const d = lvData[lv];
-      const jpy = Math.round(r.diamonds * d.rateNum * FX);
-      totalJpy += 0; // 合計は選択レベルで後計算
-      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #f0f0f0;">
-        <span style="background:${lvColors[lv-1]};color:${lvTColors[lv-1]};font-size:11px;font-weight:500;padding:1px 8px;border-radius:999px;">Lv${lv}</span>
-        <span style="font-size:11px;color:#888;">${d.days}&ensp;${d.hours}</span>
-        <span style="font-size:14px;font-weight:500;color:#D85A30;">¥${jpy.toLocaleString()}</span>
-      </div>`;
+
+  let grandActive = 0;
+  const cardsHtml = results.map(function(r) {
+    // 配信日数・時間・ダイヤから達成Lvを自動判定
+    const achievedLv = getActiveLv(r.days, r.hours, r.diamonds);
+    const hasCondition = r.days > 0 && r.hours > 0;
+
+    // 達成Lvの報酬
+    var achievedJpy = 0;
+    if (achievedLv > 0) {
+      achievedJpy = Math.round(r.diamonds * lvData[achievedLv].rateNum * FX);
+      grandActive += achievedJpy;
+    }
+
+    // Lv別一覧（達成Lvをハイライト）
+    const activeLvHtml = [1,2,3,4,5].map(function(lv) {
+      const d    = lvData[lv];
+      const jpy  = Math.round(r.diamonds * d.rateNum * FX);
+      const isAchieved = (lv === achievedLv);
+      const rowStyle = isAchieved
+        ? 'display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:7px;background:' + lvColors[lv-1] + ';margin-bottom:3px;'
+        : 'display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #f5f5f3;opacity:' + (hasCondition ? '0.4' : '1') + ';';
+      return '<div style="' + rowStyle + '">' +
+        '<div style="display:flex;align-items:center;gap:5px;">' +
+          '<span style="background:' + (isAchieved ? '#fff' : lvColors[lv-1]) + ';color:' + lvTColors[lv-1] + ';font-size:10px;font-weight:600;padding:1px 7px;border-radius:999px;">' +
+            'Lv' + lv + (isAchieved ? ' ✓' : '') +
+          '</span>' +
+          '<span style="font-size:10px;color:' + (isAchieved ? lvTColors[lv-1] : '#aaa') + ';">' + d.days + ' / ' + d.hours + '</span>' +
+        '</div>' +
+        '<span style="font-size:' + (isAchieved ? '14px' : '12px') + ';font-weight:' + (isAchieved ? '700' : '500') + ';color:' + (isAchieved ? lvTColors[lv-1] : '#bbb') + ';">¥' + jpy.toLocaleString() + '</span>' +
+      '</div>';
     }).join('');
-    // デフォルトはLv1の円換算を合計に加算
-    totalJpy += Math.round(r.diamonds * lvData[1].rateNum * FX);
-    return `<div style="background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <div>
-          <span style="font-size:13px;font-weight:500;">${r.name}</span>
-          ${r.tikId ? `<span style="font-size:11px;color:#185FA5;margin-left:6px;">${r.tikId}</span>` : ''}
-        </div>
-        <span style="font-size:12px;color:#888;">${fmtD(r.diamonds)} ダイヤ</span>
-      </div>
-      ${lvHtml}
-    </div>`;
+
+    // 条件サマリー
+    var condHtml = '';
+    if (hasCondition) {
+      var condColor = achievedLv > 0 ? '#3B6D11' : '#993C1D';
+      var condBg    = achievedLv > 0 ? '#EAF3DE' : '#FAECE7';
+      condHtml = '<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">' +
+        '<span style="font-size:11px;background:#f0ede8;padding:2px 8px;border-radius:999px;color:#555;">' + r.days + '日 / ' + r.hours + 'h</span>' +
+        '<span style="font-size:11px;background:' + condBg + ';padding:2px 8px;border-radius:999px;color:' + condColor + ';font-weight:500;">' +
+          (achievedLv > 0 ? 'Lv' + achievedLv + ' 達成' : '未達（Lv対象外）') +
+        '</span>' +
+      '</div>';
+    }
+
+    return '<div style="background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:0.75rem;margin-bottom:0.5rem;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+        '<div>' +
+          '<span style="font-size:13px;font-weight:600;">' + r.name + '</span>' +
+          (r.tikId ? '<span style="font-size:10px;color:#185FA5;margin-left:6px;">' + r.tikId + '</span>' : '') +
+        '</div>' +
+        '<span style="font-size:11px;color:#888;">' + fmtD(r.diamonds) + ' ダイヤ</span>' +
+      '</div>' +
+      condHtml +
+      '<div style="font-size:10px;color:#666;font-weight:500;margin-bottom:5px;">▸ アクティブタスク報酬</div>' +
+      activeLvHtml +
+      (achievedLv > 0 ? '<div style="margin-top:8px;padding-top:8px;border-top:0.5px solid #eee;display:flex;justify-content:space-between;align-items:baseline;">' +
+        '<span style="font-size:11px;color:#555;">報酬（Lv' + achievedLv + '確定）</span>' +
+        '<span style="font-size:16px;font-weight:700;color:#D85A30;">¥' + achievedJpy.toLocaleString() + '</span>' +
+      '</div>' : '') +
+    '</div>';
   }).join('');
+
   document.getElementById('multi-cards').innerHTML = cardsHtml;
-  document.getElementById('total-jpy').textContent = '¥' + totalJpy.toLocaleString() + '（Lv1基準）';
+
+  const revAgencyJpy = calcRevTotalAgencyJpy;
+  document.getElementById('total-active').textContent  = '¥' + grandActive.toLocaleString();
+  document.getElementById('total-revenue').textContent = revAgencyJpy > 0
+    ? '¥' + revAgencyJpy.toLocaleString()
+    : '—（②レベニュー計算を入力してください）';
+  document.getElementById('total-jpy').textContent = '¥' + (grandActive + revAgencyJpy).toLocaleString();
 }
 
 function clearAll() {
   document.getElementById('liver-rows').innerHTML = '';
   liverCount = 0;
   document.getElementById('multi-result').style.display = 'none';
+  ['rev-total-last','rev-total-curr','goal-diamond','goal-reward'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('rev-total-result').style.display = 'none';
+  document.getElementById('rev-total-none').style.display   = 'none';
+  document.getElementById('goal-result').style.display      = 'none';
+  calcRevTotalAgencyJpy = 0;
   addLiverRow();
   addLiverRow();
+}
+
+// ===== 逆算ツール =====
+function calcGoal() {
+  const dGoal = parseD(document.getElementById('goal-diamond').value);
+  const rGoal = parseFloat((document.getElementById('goal-reward').value || '').replace(/,/g,''));
+  const res   = document.getElementById('goal-result');
+  const hasD  = dGoal && dGoal > 0;
+  const hasR  = rGoal && rGoal > 0;
+  if (!hasD && !hasR) { res.style.display = 'none'; return; }
+  res.style.display = 'block';
+
+  const dRows = hasD ? [1,2,3,4,5].map(function(lv) {
+    const d   = lvData[lv];
+    const jpy = Math.round(dGoal * d.rateNum * FX);
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:0.5px solid #eee;">' +
+      '<span style="background:' + lvColors[lv-1] + ';color:' + lvTColors[lv-1] + ';font-size:11px;padding:1px 8px;border-radius:999px;font-weight:500;">Lv' + lv + '</span>' +
+      '<span style="font-size:11px;color:#888;">' + fmtD(dGoal) + ' ダイヤ達成時</span>' +
+      '<span style="font-size:13px;font-weight:500;color:#D85A30;">¥' + jpy.toLocaleString() + '</span>' +
+    '</div>';
+  }).join('') : '';
+
+  const rRows = hasR ? [1,2,3,4,5].map(function(lv) {
+    const d      = lvData[lv];
+    const needed = Math.ceil(rGoal / (d.rateNum * FX));
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:0.5px solid #eee;">' +
+      '<span style="background:' + lvColors[lv-1] + ';color:' + lvTColors[lv-1] + ';font-size:11px;padding:1px 8px;border-radius:999px;font-weight:500;">Lv' + lv + '</span>' +
+      '<span style="font-size:11px;color:#888;">¥' + rGoal.toLocaleString() + ' 達成に必要</span>' +
+      '<span style="font-size:13px;font-weight:500;color:#1a1a1a;">' + fmtD(needed) + ' ダイヤ</span>' +
+    '</div>';
+  }).join('') : '';
+
+  document.getElementById('goal-rows-diamond').innerHTML =
+    hasD ? '<div style="font-size:10px;color:#666;font-weight:500;margin-bottom:4px;">目標ダイヤ達成時の報酬（Lv別）</div>' + dRows : '';
+  document.getElementById('goal-rows-reward').innerHTML =
+    hasR ? '<div style="font-size:10px;color:#666;font-weight:500;margin:8px 0 4px;">目標報酬達成に必要なダイヤ数（Lv別）</div>' + rRows : '';
 }
 
 // 初期化
@@ -446,6 +702,100 @@ showLv(1);
 addLiverRow();
 addLiverRow();
 renderRevExamples();
+// ===== 報酬計算タブ =====
+let calcRevTotalAgencyJpy = 0;
+
+function getRevLevel(ratio) {
+  if (ratio >= 1.40) return revLevels[0]; // Lv4
+  if (ratio >= 1.20) return revLevels[1]; // Lv3
+  if (ratio >= 1.10) return revLevels[2]; // Lv2
+  if (ratio >= 1.00) return revLevels[3]; // Lv1
+  return null;
+}
+
+function calcRevTotal() {
+  var last   = parseD(document.getElementById('rev-total-last').value);
+  var curr   = parseD(document.getElementById('rev-total-curr').value);
+  var resEl  = document.getElementById('rev-total-result');
+  var noneEl = document.getElementById('rev-total-none');
+
+  if (!last || !curr || last <= 0 || curr <= 0) {
+    resEl.style.display  = 'none';
+    noneEl.style.display = 'none';
+    calcRevTotalAgencyJpy = 0;
+    return;
+  }
+
+  var ratio  = curr / last;
+  var lvObj  = getRevLevel(ratio);
+
+  if (!lvObj) {
+    resEl.style.display  = 'none';
+    noneEl.style.display = 'block';
+    noneEl.textContent   = '先月比 ' + (ratio * 100).toFixed(1) + '% — レベニュー対象外（100%未満）';
+    calcRevTotalAgencyJpy = 0;
+    return;
+  }
+
+  var bonusUsd  = curr * lvObj.rate;
+  var bonusJpy  = bonusUsd * FX;
+  var agencyJpy = bonusJpy / 2 * 0.6;
+  calcRevTotalAgencyJpy = Math.round(agencyJpy);
+
+  noneEl.style.display = 'none';
+  resEl.style.display  = 'block';
+
+  document.getElementById('rev-total-ratio').textContent = (ratio * 100).toFixed(1) + '%';
+  document.getElementById('rev-total-level').innerHTML =
+    '<span style="background:' + lvObj.bg + ';color:' + lvObj.tc + ';padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;">' +
+    lvObj.label + '</span>';
+  document.getElementById('rev-total-agency').textContent = '¥' + calcRevTotalAgencyJpy.toLocaleString();
+}
+
+
+// ライバー行リアルタイムLvプレビュー
+function previewLv(id) {
+  var days     = parseFloat(document.getElementById('ldays-' + id).value) || 0;
+  var hours    = parseFloat(document.getElementById('lhours-' + id).value) || 0;
+  var diamonds = parseD(document.getElementById('ldiamond-' + id).value);
+  var preview  = document.getElementById('lv-preview-' + id);
+  if (!preview) return;
+  if (!days && !hours && !diamonds) { preview.innerHTML = ''; return; }
+  var lv = getActiveLv(days, hours, diamonds || 0);
+  var html_str = '<div style="display:flex;align-items:center;gap:6px;padding:5px 2px;">';
+  [1,2,3,4,5].forEach(function(l) {
+    var d = lvData[l];
+    var daysOk  = days  >= d.minDays;
+    var hoursOk = hours >= d.minHours;
+    var diaOk   = diamonds && diamonds >= d.minDiamond;
+    var allOk   = daysOk && hoursOk && diaOk;
+    var isTarget = (l === lv);
+    html_str += '<div style="flex:1;text-align:center;padding:5px 2px;border-radius:7px;' +
+      (isTarget ? 'background:' + lvColors[l-1] + ';' : 'background:#f5f5f3;') + '">' +
+      '<div style="font-size:10px;font-weight:' + (isTarget ? '700' : '500') + ';color:' + (isTarget ? lvTColors[l-1] : '#bbb') + ';">Lv' + l + '</div>' +
+      '<div style="font-size:9px;color:' + (isTarget ? lvTColors[l-1] : '#ccc') + ';margin-top:1px;">' + (isTarget ? '✓ 達成' : (allOk ? '✓' : '–')) + '</div>' +
+    '</div>';
+  });
+  html_str += '</div>';
+  if (lv > 0) {
+    var jpy = Math.round((diamonds||0) * lvData[lv].rateNum * FX);
+    html_str += '<div style="background:' + lvColors[lv-1] + ';border-radius:8px;padding:6px 10px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
+      '<span style="font-size:11px;font-weight:600;color:' + lvTColors[lv-1] + ';">Lv' + lv + ' 確定 ✓</span>' +
+      '<span style="font-size:16px;font-weight:700;color:' + lvTColors[lv-1] + ';">¥' + jpy.toLocaleString() + '</span>' +
+    '</div>';
+  } else if (days || hours || diamonds) {
+    html_str += '<div style="background:#f0ede8;border-radius:8px;padding:6px 10px;margin-top:4px;text-align:center;font-size:11px;color:#aaa;">条件未達（Lv対象外）</div>';
+  }
+  preview.innerHTML = html_str;
+}
+
+// ===== ライバー別報酬計算 =====
+// 初期化
+showLv(1);
+addLiverRow();
+addLiverRow();
+renderRevExamples();
+
 </script>
 </body>
 </html>
