@@ -541,7 +541,7 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
         <span id="rev-bonus-rate-disp" style="font-size:13px;font-weight:600;color:#854F0B;"></span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0 3px;">
-        <span style="font-size:12px;color:#854F0B;font-weight:600;">レベニューボーナス（円）</span>
+        <span style="font-size:12px;color:#854F0B;font-weight:600;">レベニューボーナス（60%）</span>
         <span id="rev-bonus-jpy" style="font-size:18px;font-weight:700;color:#854F0B;"></span>
       </div>
     </div>
@@ -570,9 +570,682 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     </div>
   </div>
   <button onclick="updateGrandTotal()"
-    style="width:100%;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#1a1a1a;color:#fff;cursor:pointer;margin-bottom:1rem;">
+    style="width:100%;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#1a1a1a;color:#fff;cursor:pointer;margin-bottom:1.5rem;">
     総報酬額を更新
   </button>
+
+
+</div>
+
+</div>>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>事務所収益表</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: #f5f5f3; color: #1a1a1a; }
+.wrap { padding: 1rem; max-width: 480px; margin: 0 auto; }
+.page { display: none; }
+.page.active { display: block; }
+.nav-tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; min-width: 70px; padding: 6px 4px; font-size: 11px; font-weight: 500; border: 0.5px solid #ccc; border-radius: 8px; background: #e8e8e6; color: #666; cursor: pointer; text-align: center; transition: all 0.15s; }
+.tab-btn.active { background: #fff; border-color: #999; color: #1a1a1a; }
+.section-title { font-size: 14px; font-weight: 500; color: #1a1a1a; margin: 1.25rem 0 0.75rem; border-left: 3px solid #D85A30; padding-left: 8px; }
+.card { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem; }
+.card-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid #eee; font-size: 13px; }
+.card-row:last-child { border-bottom: none; }
+.card-label { color: #666; }
+.card-val { font-weight: 500; color: #1a1a1a; }
+.card-val.accent { color: #D85A30; }
+.badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 999px; }
+.badge-red { background: #FAECE7; color: #993C1D; }
+.badge-blue { background: #E6F1FB; color: #185FA5; }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.info-box { background: #f0ede8; border-radius: 8px; padding: 0.75rem 1rem; font-size: 12px; color: #555; margin-bottom: 0.75rem; line-height: 1.6; }
+.info-box strong { color: #1a1a1a; font-weight: 500; }
+.milestone-card { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem; }
+.milestone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.milestone-name { font-size: 14px; font-weight: 500; }
+.milestone-diamonds { font-size: 12px; color: #666; margin-bottom: 8px; }
+.milestone-amounts { display: flex; gap: 8px; }
+.amount-box { flex: 1; background: #f5f5f3; border-radius: 8px; padding: 6px 8px; text-align: center; }
+.amount-label { font-size: 10px; color: #888; margin-bottom: 2px; }
+.amount-val { font-size: 14px; font-weight: 500; color: #D85A30; }
+.lv-selector { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+.lv-btn { padding: 5px 12px; font-size: 12px; font-weight: 500; border: 0.5px solid #ccc; border-radius: 999px; background: #f0ede8; color: #666; cursor: pointer; transition: all 0.15s; }
+.lv-btn.active { background: #D85A30; border-color: #D85A30; color: #fff; }
+.condition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+.cond-box { background: #f5f5f3; border-radius: 8px; padding: 8px 10px; }
+.cond-label { font-size: 10px; color: #888; margin-bottom: 2px; }
+.cond-val { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+.diamond-input { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+.diamond-input input { flex: 1; padding: 8px 12px; font-size: 14px; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; color: #1a1a1a; outline: none; }
+.diamond-input input:focus { border-color: #D85A30; }
+.result-big { font-size: 18px; font-weight: 500; color: #D85A30; }
+.rev-lv-card { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 12px; }
+.rev-lv-badge { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+.rev-info { flex: 1; }
+.rev-cond { font-size: 12px; color: #666; }
+.rev-rate { font-size: 15px; font-weight: 500; color: #1a1a1a; }
+.note { font-size: 11px; color: #888; line-height: 1.5; padding: 6px 0; }
+h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; padding: 1rem 0 0.5rem; }
+.subtitle { font-size: 11px; color: #888; margin-bottom: 1rem; }
+
+.km-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 32px; font-size: 11px; font-weight: 700;
+  border-radius: 6px; border: 0.5px solid #ccc;
+  background: #f0ede8; color: #555; cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+.km-btn:active { background: #D85A30; color: #fff; border-color: #D85A30; }
+.km-wrap { display: flex; align-items: center; gap: 4px; width: 100%; }
+.km-wrap input { flex: 1; min-width: 0; width: 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>事務所収益表</h1>
+<p class="subtitle">TikTokライブ配信 報酬制度ガイド — HUMEDIA japan.</p>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showPage('overview', this)">概要</button>
+  <button class="tab-btn" onclick="showPage('rookie', this)">ランクアップ</button>
+  <button class="tab-btn" onclick="showPage('active', this)">アクティブ</button>
+  <button class="tab-btn" onclick="showPage('revenue', this)">レベニュー</button>
+  <button class="tab-btn" onclick="showPage('calc', this)">事務所収益計算</button>
+</div>
+
+<div id="overview" class="page active">
+  <div class="info-box">
+    TikTokライブ配信の報酬制度の説明です。事務所の収益は以下の3つの組み合わせで構成されます。
+  </div>
+
+  <!-- 収益構造 -->
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:1rem;margin-bottom:0.75rem;text-align:center;">
+    <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:10px;">事務所収益の構成</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;">
+      <div style="background:#EAF3DE;color:#3B6D11;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;">ランクアップ</div>
+      <div style="font-size:14px;color:#aaa;font-weight:500;">＋</div>
+      <div style="background:#E6F1FB;color:#185FA5;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;">アクティブ</div>
+      <div style="font-size:14px;color:#aaa;font-weight:500;">＋</div>
+      <div style="background:#FAEEDA;color:#854F0B;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;">レベニュー</div>
+      <div style="font-size:14px;color:#aaa;font-weight:500;">＝</div>
+      <div style="background:#D85A30;color:#fff;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:700;">事務所収益</div>
+    </div>
+  </div>
+
+  <div class="section-title">基本単位</div>
+  <div class="card">
+    <div class="card-row"><span class="card-label">1コイン（ギフター）</span><span class="card-val">= 1ダイヤ</span></div>
+    <div class="card-row"><span class="card-label">1ダイヤ（換算）</span><span class="card-val">= 0.75円</span></div>
+    <div class="card-row"><span class="card-label">為替レート</span><span class="card-val">¥158.938 / $</span></div>
+  </div>
+
+  <!-- 目標設定（calc から移動） -->
+  <div class="section-title">目標設定</div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">目標獲得ダイヤ数</div>
+      <div class="km-wrap">
+        <input id="goal-diamond" type="text" placeholder="例: 5M"
+          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+          oninput="calcGoal()">
+        <button class="km-btn" onclick="appendKM('goal-diamond','K',calcGoal)">K</button>
+        <button class="km-btn" onclick="appendKM('goal-diamond','M',calcGoal)">M</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">目標報酬金額（円）</div>
+      <input id="goal-reward" type="text" placeholder="例: 100000"
+        style="width:100%;padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+        oninput="calcGoal()">
+    </div>
+    <div id="goal-result" style="display:none;background:#f5f5f3;border-radius:8px;padding:10px;margin-top:10px;">
+      <div id="goal-rows-diamond" style="margin-bottom:6px;"></div>
+      <div id="goal-rows-reward"></div>
+    </div>
+  </div>
+</div>
+
+<div id="rookie" class="page">
+  <div class="info-box">
+    各月のランクは<strong>前月の獲得ダイヤモンド数</strong>に基づいて決定されます。<br>
+    ランク1〜10まで設定されており、ランク維持・ランクアップそれぞれにボーナスが発生します。
+  </div>
+
+  <!-- 上級条件 -->
+  <div style="background:#E6F1FB;border-radius:10px;padding:0.75rem 1rem;margin-bottom:0.75rem;">
+    <div style="font-size:12px;font-weight:600;color:#185FA5;margin-bottom:5px;">⭐ 上級ボーナスの適用条件（両方満たすこと）</div>
+    <div style="font-size:12px;color:#185FA5;">① 月間の有効ライブ日数が <strong>7日以上</strong></div>
+    <div style="font-size:12px;color:#185FA5;">② 月間のライブ配信時間が <strong>15時間以上</strong></div>
+  </div>
+
+  <div class="section-title">ランク別ボーナス一覧</div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#f5f5f3;color:#aaa;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R1</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 1</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：0</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 0% / 上級 0%</div>
+      </div>
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#aaa;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#aaa;">ベース 5.5% / 上級 6.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#EAF3DE;color:#3B6D11;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R2</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 2</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：100K</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 0% / 上級 0%</div>
+      </div>
+      <div style="background:#EAF3DE;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#3B6D11;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#3B6D11;">ベース 5.5% / 上級 6.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#E6F1FB;color:#185FA5;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R3</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 3</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：200K</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1.5% / 上級 2.5%</div>
+      </div>
+      <div style="background:#E6F1FB;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#185FA5;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#185FA5;">ベース 3.5% / 上級 4.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#E1F5EE;color:#085041;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R4</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 4</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：300K</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1.5% / 上級 2.5%</div>
+      </div>
+      <div style="background:#E1F5EE;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#085041;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#085041;">ベース 3.5% / 上級 4.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#FFF9E0;color:#7A6000;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R5</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 5</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：500K</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1.5% / 上級 2.5%</div>
+      </div>
+      <div style="background:#FFF9E0;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#7A6000;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#7A6000;">ベース 3.5% / 上級 4.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#FAEEDA;color:#854F0B;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R6</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 6</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：1M</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1.5% / 上級 2.5%</div>
+      </div>
+      <div style="background:#FAEEDA;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#854F0B;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#854F0B;">ベース 3.5% / 上級 4.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#FAECE7;color:#993C1D;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R7</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 7</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：1.6M</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1.5% / 上級 2.5%</div>
+      </div>
+      <div style="background:#FAECE7;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#993C1D;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#993C1D;">ベース 3.5% / 上級 4.5%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#EEEDFE;color:#534AB7;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R8</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 8</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：3M</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1% / 上級 2%</div>
+      </div>
+      <div style="background:#EEEDFE;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#534AB7;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#534AB7;">ベース 2% / 上級 3%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#F5E9FF;color:#6B2FA0;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R9</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 9</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：5M</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1% / 上級 2%</div>
+      </div>
+      <div style="background:#F5E9FF;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#6B2FA0;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#6B2FA0;">ベース 2% / 上級 3%</div>
+      </div>
+    </div>
+  </div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <div style="background:#FFE8E8;color:#A30000;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R10</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 10</div>
+        <div style="font-size:11px;color:#888;">基準ダイヤ：8M</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#f5f5f3;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">ランク維持ボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#555;">ベース 1% / 上級 2%</div>
+      </div>
+      <div style="background:#FFE8E8;border-radius:8px;padding:7px 10px;">
+        <div style="font-size:9px;color:#A30000;opacity:0.8;margin-bottom:3px;">ランクアップボーナス</div>
+        <div style="font-size:12px;font-weight:600;color:#A30000;">ベース 0% / 上級 0%</div>
+      </div>
+    </div><div style="font-size:10px;color:#aaa;margin-top:6px;">※ ランク10はランクアップボーナス適用なし</div>
+  </div>
+
+  <div class="section-title">具体例</div>
+  <div class="card">
+    <div class="card-row">
+      <span class="card-label">前月 200K（ランク3） → 当月 200K達成</span>
+      <span class="card-val accent">維持ボーナス適用</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">さらに 500K到達 → ランク5へ昇格</span>
+      <span class="card-val accent">アップボーナス適用</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">7日以上 ＋ 15h以上の配信あり</span>
+      <span class="card-val" style="color:#185FA5;">上級レート 4.5% 適用</span>
+    </div>
+  </div>
+  <p class="note">※ ランクアップは「前月ランクを超えるダイヤ数」を当月に獲得した場合に適用。</p>
+</div>
+
+<div id="active" class="page">
+  <div class="info-box"><strong>対象：</strong>全クリエイター（毎月変動・当月データ換算）<br><br><strong>有効配信日数とは：</strong>1日に1時間の配信時間を超えた日数<br>⚠️ 23時以降の配信は23:59までの配信でカウント（1日として換算されない）</div>
+
+  <div class="section-title">レベル別獲得条件</div>
+  <div id="lv-selector" class="lv-selector">
+    <button class="lv-btn active" onclick="showLv(1)">Lv1</button>
+    <button class="lv-btn" onclick="showLv(2)">Lv2</button>
+    <button class="lv-btn" onclick="showLv(3)">Lv3</button>
+    <button class="lv-btn" onclick="showLv(4)">Lv4</button>
+    <button class="lv-btn" onclick="showLv(5)">Lv5</button>
+  </div>
+
+  <div class="condition-grid">
+    <div class="cond-box"><div class="cond-label">ダイヤ数/月</div><div class="cond-val" id="cond-diamond">150,000以上</div></div>
+    <div class="cond-box"><div class="cond-label">有効配信日数</div><div class="cond-val" id="cond-days">18日以上</div></div>
+    <div class="cond-box"><div class="cond-label">月間LIVE時間</div><div class="cond-val" id="cond-hours">40時間以上</div></div>
+    <div class="cond-box"><div class="cond-label">1ダイヤあたり報酬</div><div class="cond-val" id="cond-rate" style="color:#D85A30;">$0.0002</div></div>
+  </div>
+
+  <div class="section-title" id="lv-detail-title">Lv1 — 報酬早見表</div>
+  <div class="card" id="lv-table"></div>
+</div>
+
+<div id="revenue" class="page">
+  <div class="info-box"><strong>レベニューボーナス：</strong>前月比のダイヤ数増加率に応じて追加ボーナスが発生します。</div>
+
+  <div class="section-title">ボーナス率</div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#E1F5EE; color:#085041;">Lv1</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 70%</div>
+      <div class="rev-rate">2% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">70%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#EAF3DE; color:#3B6D11;">Lv2</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 80%</div>
+      <div class="rev-rate">3% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">80%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#E6F1FB; color:#185FA5;">Lv3</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 90%</div>
+      <div class="rev-rate">6% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">90%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#FFF9E0; color:#7A6000;">Lv4</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 100%</div>
+      <div class="rev-rate">8% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">100%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#FAEEDA; color:#854F0B;">Lv5</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 110%</div>
+      <div class="rev-rate">10% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">110%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#FAECE7; color:#993C1D;">Lv6</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 120%</div>
+      <div class="rev-rate">12% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">120%達成</div>
+  </div>
+  <div class="rev-lv-card">
+    <div class="rev-lv-badge" style="background:#EEEDFE; color:#534AB7;">Lv7</div>
+    <div class="rev-info">
+      <div class="rev-cond">先月比 ≥ 140%</div>
+      <div class="rev-rate">15% ボーナス</div>
+    </div>
+    <div style="font-size:11px; color:#888; text-align:right;">140%達成</div>
+  </div>
+
+  <p class="note" style="margin-bottom:0.75rem;">※ 現状の全体ボーナスは、毎週月曜日に「ヒューメディアエージェンシー」にて進捗発表しておりますので、ご確認ください。</p>
+
+  <div class="section-title">計算例（先月10M基準）</div>
+  <div class="card">
+    <div class="card-row">
+      <span class="card-label">今月7M（70%・Lv1/2%）</span>
+      <span class="card-val accent" id="rev-ex1">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月8M（80%・Lv2/3%）</span>
+      <span class="card-val accent" id="rev-ex2">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月9M（90%・Lv3/6%）</span>
+      <span class="card-val accent" id="rev-ex3">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月10M（100%・Lv4/8%）</span>
+      <span class="card-val accent" id="rev-ex4">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月11M（110%・Lv5/10%）</span>
+      <span class="card-val accent" id="rev-ex5">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月12M（120%・Lv6/12%）</span>
+      <span class="card-val accent" id="rev-ex6">計算中...</span>
+    </div>
+    <div class="card-row">
+      <span class="card-label">今月14M（140%・Lv7/15%）</span>
+      <span class="card-val accent" id="rev-ex7">計算中...</span>
+    </div>
+  </div>
+
+  <p class="note">※ 実際の計算は「事務所収益計算」タブのレベニューボーナス欄から行えます。</p>
+</div>
+
+<div id="calc" class="page">
+
+  <!-- ① ライバー別報酬 -->
+  <div class="section-title">① ライバー別報酬（ランクアップ ＋ アクティブ）</div>
+  <div style="font-size:11px;color:#888;margin-bottom:8px;">配信日数・時間・ダイヤを入力するとアクティブLvが自動判定されます</div>
+  <div id="liver-rows"></div>
+  <button onclick="addLiverRow()"
+    style="width:100%;padding:9px;font-size:13px;font-weight:500;border:0.5px dashed #ccc;border-radius:8px;background:#f5f5f3;color:#666;cursor:pointer;margin-bottom:0.75rem;">
+    ＋ ライバーを追加
+  </button>
+  <div style="display:flex;gap:8px;margin-bottom:1rem;">
+    <button onclick="calcAll()"
+      style="flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#D85A30;color:#fff;cursor:pointer;">
+      計算する
+    </button>
+    <button onclick="clearAll()"
+      style="padding:11px 16px;font-size:13px;border:0.5px solid #ccc;border-radius:10px;background:#fff;color:#666;cursor:pointer;">
+      クリア
+    </button>
+  </div>
+
+  <!-- ② レベニューボーナス -->
+  <div class="section-title">② レベニューボーナス</div>
+  <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:5px;">会社全体の獲得ダイヤ数</div>
+      <div class="km-wrap">
+        <input id="rev-bonus-diamond" type="text" placeholder="例: 10M"
+          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
+          oninput="calcRevBonus()">
+        <button class="km-btn" onclick="appendKM('rev-bonus-diamond','K',calcRevBonus)">K</button>
+        <button class="km-btn" onclick="appendKM('rev-bonus-diamond','M',calcRevBonus)">M</button>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:11px;color:#888;margin-bottom:6px;">ボーナス率を選択</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:5px;">
+        <button class="rev-rate-btn active" id="rrate-btn-2" onclick="selectRevRate(2)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #9FE1CB;border-radius:8px;background:#E1F5EE;color:#085041;cursor:pointer;">2%<br><span style="font-size:9px;font-weight:400;">Lv1</span></button>
+        <button class="rev-rate-btn" id="rrate-btn-3" onclick="selectRevRate(3)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">3%<br><span style="font-size:9px;font-weight:400;">Lv2</span></button>
+        <button class="rev-rate-btn" id="rrate-btn-6" onclick="selectRevRate(6)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">6%<br><span style="font-size:9px;font-weight:400;">Lv3</span></button>
+        <button class="rev-rate-btn" id="rrate-btn-8" onclick="selectRevRate(8)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">8%<br><span style="font-size:9px;font-weight:400;">Lv4</span></button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">
+        <button class="rev-rate-btn" id="rrate-btn-10" onclick="selectRevRate(10)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">10%<br><span style="font-size:9px;font-weight:400;">Lv5</span></button>
+        <button class="rev-rate-btn" id="rrate-btn-12" onclick="selectRevRate(12)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">12%<br><span style="font-size:9px;font-weight:400;">Lv6</span></button>
+        <button class="rev-rate-btn" id="rrate-btn-15" onclick="selectRevRate(15)"
+          style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">15%<br><span style="font-size:9px;font-weight:400;">Lv7</span></button>
+      </div>
+    </div>
+    <div id="rev-bonus-result" style="display:none;background:#f5f5f3;border-radius:8px;padding:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #e0ddd8;">
+        <span style="font-size:12px;color:#666;">獲得ダイヤ</span>
+        <span id="rev-bonus-disp" style="font-size:13px;font-weight:600;color:#1a1a1a;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #e0ddd8;">
+        <span style="font-size:12px;color:#666;">適用ボーナス率</span>
+        <span id="rev-bonus-rate-disp" style="font-size:13px;font-weight:600;color:#854F0B;"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0 3px;">
+        <span style="font-size:12px;color:#854F0B;font-weight:600;">レベニューボーナス（60%）</span>
+        <span id="rev-bonus-jpy" style="font-size:18px;font-weight:700;color:#854F0B;"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 結果 -->
+  <div id="multi-result" style="display:none;">
+    <div class="section-title">③ ライバー別内訳</div>
+    <div id="multi-cards"></div>
+  </div>
+
+  <!-- 総報酬額 -->
+  <div class="section-title">総報酬額</div>
+  <div style="background:#FAECE7;border-radius:12px;padding:1rem;margin-bottom:1rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #E8BFB5;">
+      <span style="font-size:12px;color:#993C1D;">事務所収益合計（ライバー計）</span>
+      <span id="total-active" style="font-size:15px;font-weight:600;color:#993C1D;">—</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #E8BFB5;">
+      <span style="font-size:12px;color:#993C1D;">レベニューボーナス</span>
+      <span id="total-revenue" style="font-size:15px;font-weight:600;color:#993C1D;">—</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;">
+      <span style="font-size:14px;font-weight:700;color:#993C1D;">総報酬額</span>
+      <span id="total-jpy" style="font-size:28px;font-weight:700;color:#D85A30;">—</span>
+    </div>
+  </div>
+  <button onclick="updateGrandTotal()"
+    style="width:100%;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#1a1a1a;color:#fff;cursor:pointer;margin-bottom:1.5rem;">
+    総報酬額を更新
+  </button>
+
+  <!-- ─── 70% バージョン ─── -->
+  <div style="border-top:1.5px dashed #ccc;padding-top:1.25rem;margin-top:0.5rem;">
+    <div style="font-size:13px;font-weight:700;color:#185FA5;margin-bottom:1rem;display:flex;align-items:center;gap:6px;">
+      <span style="background:#185FA5;color:#fff;font-size:10px;padding:2px 8px;border-radius:999px;">70% ver.</span>
+      70% 配分バージョン
+    </div>
+
+    <!-- ライバー別 70% -->
+    <div class="section-title" style="border-color:#185FA5;">① ライバー別報酬（70%）</div>
+    <div id="liver-rows-70"></div>
+    <button onclick="addLiverRow70()"
+      style="width:100%;padding:9px;font-size:13px;font-weight:500;border:0.5px dashed #aac8f0;border-radius:8px;background:#f0f5fb;color:#185FA5;cursor:pointer;margin-bottom:0.75rem;">
+      ＋ ライバーを追加
+    </button>
+    <div style="display:flex;gap:8px;margin-bottom:1rem;">
+      <button onclick="calcAll70()"
+        style="flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#185FA5;color:#fff;cursor:pointer;">
+        計算する（70%）
+      </button>
+      <button onclick="clearAll70()"
+        style="padding:11px 16px;font-size:13px;border:0.5px solid #ccc;border-radius:10px;background:#fff;color:#666;cursor:pointer;">
+        クリア
+      </button>
+    </div>
+    <div id="multi-result-70" style="display:none;">
+      <div class="section-title" style="border-color:#185FA5;">③ ライバー別内訳（70%）</div>
+      <div id="multi-cards-70"></div>
+    </div>
+
+    <!-- レベニューボーナス 70% -->
+    <div class="section-title" style="border-color:#185FA5;">② レベニューボーナス（70%）</div>
+    <div style="background:#fff;border:0.5px solid #aac8f0;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
+      <div style="margin-bottom:10px;">
+        <div style="font-size:11px;color:#888;margin-bottom:5px;">会社全体の獲得ダイヤ数</div>
+        <div class="km-wrap">
+          <input id="rev-bonus-diamond-70" type="text" placeholder="例: 10M"
+            style="padding:9px 10px;font-size:14px;border:0.5px solid #aac8f0;border-radius:8px;background:#fafafa;outline:none;"
+            oninput="calcRevBonus70()">
+          <button class="km-btn" onclick="appendKM('rev-bonus-diamond-70','K',calcRevBonus70)">K</button>
+          <button class="km-btn" onclick="appendKM('rev-bonus-diamond-70','M',calcRevBonus70)">M</button>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;">ボーナス率を選択</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:5px;">
+          <button id="rrate70-btn-2"  onclick="selectRevRate70(2)"  style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #aac8f0;border-radius:8px;background:#E6F1FB;color:#185FA5;cursor:pointer;">2%<br><span style="font-size:9px;font-weight:400;">Lv1</span></button>
+          <button id="rrate70-btn-3"  onclick="selectRevRate70(3)"  style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">3%<br><span style="font-size:9px;font-weight:400;">Lv2</span></button>
+          <button id="rrate70-btn-6"  onclick="selectRevRate70(6)"  style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">6%<br><span style="font-size:9px;font-weight:400;">Lv3</span></button>
+          <button id="rrate70-btn-8"  onclick="selectRevRate70(8)"  style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">8%<br><span style="font-size:9px;font-weight:400;">Lv4</span></button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">
+          <button id="rrate70-btn-10" onclick="selectRevRate70(10)" style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">10%<br><span style="font-size:9px;font-weight:400;">Lv5</span></button>
+          <button id="rrate70-btn-12" onclick="selectRevRate70(12)" style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">12%<br><span style="font-size:9px;font-weight:400;">Lv6</span></button>
+          <button id="rrate70-btn-15" onclick="selectRevRate70(15)" style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#f0ede8;color:#666;cursor:pointer;">15%<br><span style="font-size:9px;font-weight:400;">Lv7</span></button>
+        </div>
+      </div>
+      <div id="rev-bonus-result-70" style="display:none;background:#f0f5fb;border-radius:8px;padding:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #c5d9ee;">
+          <span style="font-size:12px;color:#666;">獲得ダイヤ</span>
+          <span id="rev-bonus-disp-70" style="font-size:13px;font-weight:600;color:#1a1a1a;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #c5d9ee;">
+          <span style="font-size:12px;color:#666;">適用ボーナス率</span>
+          <span id="rev-bonus-rate-disp-70" style="font-size:13px;font-weight:600;color:#185FA5;"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0 3px;">
+          <span style="font-size:12px;color:#185FA5;font-weight:600;">レベニューボーナス（70%）</span>
+          <span id="rev-bonus-jpy-70" style="font-size:18px;font-weight:700;color:#185FA5;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 総報酬額 70% -->
+    <div class="section-title" style="border-color:#185FA5;">総報酬額（70%）</div>
+    <div style="background:#E6F1FB;border-radius:12px;padding:1rem;margin-bottom:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #aac8f0;">
+        <span style="font-size:12px;color:#185FA5;">事務所収益合計（ライバー計）</span>
+        <span id="total-active-70" style="font-size:15px;font-weight:600;color:#185FA5;">—</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid #aac8f0;">
+        <span style="font-size:12px;color:#185FA5;">レベニューボーナス</span>
+        <span id="total-revenue-70" style="font-size:15px;font-weight:600;color:#185FA5;">—</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 4px;">
+        <span style="font-size:14px;font-weight:700;color:#185FA5;">総報酬額（70%）</span>
+        <span id="total-jpy-70" style="font-size:28px;font-weight:700;color:#185FA5;">—</span>
+      </div>
+    </div>
+    <button onclick="updateGrandTotal70()"
+      style="width:100%;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:10px;background:#185FA5;color:#fff;cursor:pointer;margin-bottom:1rem;">
+      総報酬額を更新（70%）
+    </button>
+  </div>
 
 </div>
 </div>
@@ -656,7 +1329,7 @@ function showLv(lv) {
   const tbl = document.getElementById('lv-table');
   tbl.innerHTML = tableRows.map(diamonds => {
     const usd = (diamonds * d.rateNum).toFixed(1);
-    const jpy = Math.round(diamonds * d.rateNum * FX).toLocaleString();
+    const jpy = Math.round(diamonds * d.rateNum * FX * 0.6).toLocaleString();
     return `<div class="card-row"><span class="card-label">${(diamonds/10000).toFixed(0)}万ダイヤ</span><span class="card-val">$${usd} / <span style="color:#D85A30;">¥${jpy}</span></span></div>`;
   }).join('');
 }
@@ -833,10 +1506,14 @@ function previewRankup(id) {
   // ランクアップ報酬: ダイヤ × rate（正しいスケール） × FX × 60%
   var totalRate = bonus.maintRate + (bonus.isRankup ? bonus.upRate : 0);
   var jpyPreview = curr ? Math.round(curr * totalRate * FX * 0.6) : 0;
-  var jpyHtml = curr ? ('<div style="margin-top:5px;background:#fff;border-radius:7px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">' +
-    '<span style="font-size:10px;color:' + (bonus.belowThreshold ? '#993C1D' : '#888') + ';">' + (bonus.belowThreshold ? '⚠ 基準ダイヤ未達 — ボーナス対象外' : 'ランクアップ報酬') + '</span>' +
-    '<span style="font-size:14px;font-weight:700;color:' + (bonus.belowThreshold ? '#ccc' : '#3B6D11') + ';">¥'+jpyPreview.toLocaleString()+'</span>' +
-  '</div>') : '';
+  var jpyHtml = curr ? (
+    bonus.belowThreshold
+    ? '<div style="margin-top:5px;background:#FAECE7;border-radius:7px;padding:5px 10px;font-size:11px;color:#993C1D;">⚠ 基準ダイヤ未達 — ボーナス 0%</div>'
+    : '<div style="margin-top:5px;background:#EAF3DE;border-radius:7px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">' +
+        '<span style="font-size:10px;color:#3B6D11;">ランクアップ報酬（60%）</span>' +
+        '<span style="font-size:14px;font-weight:700;color:#3B6D11;">¥'+jpyPreview.toLocaleString()+'</span>' +
+      '</div>'
+  ) : '';
 
   el.innerHTML = rankHtml + bonusHtml + jpyHtml;
 }
@@ -1034,14 +1711,14 @@ function calcAll() {
     // 達成Lvの報酬
     var achievedJpy = 0;
     if (achievedLv > 0) {
-      achievedJpy = Math.round(r.diamonds * lvData[achievedLv].rateNum * FX);
+      achievedJpy = Math.round(r.diamonds * lvData[achievedLv].rateNum * FX * 0.6);
       grandActive += achievedJpy;
     }
 
     // Lv別一覧（達成Lvをハイライト）
     const activeLvHtml = [1,2,3,4,5].map(function(lv) {
       const d    = lvData[lv];
-      const jpy  = Math.round(r.diamonds * d.rateNum * FX);
+      const jpy  = Math.round(r.diamonds * d.rateNum * FX * 0.6);
       const isAchieved = (lv === achievedLv);
       const rowStyle = isAchieved
         ? 'display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:7px;background:' + lvColors[lv-1] + ';margin-bottom:3px;'
@@ -1092,10 +1769,10 @@ function calcAll() {
         '</div>' +
         (rkBonus.belowThreshold
           ? '<div style="font-size:11px;color:#993C1D;background:#FAECE7;border-radius:6px;padding:4px 8px;">⚠ 基準ダイヤ未達 — ボーナス 0%</div>'
-          : '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-              '<span style="font-size:11px;color:#555;">維持 '+rkBonus.maintPct+'%'+(rkBonus.isRankup?' + アップ '+rkBonus.upPct+'%':'')+'</span>' +
-              '<span style="font-size:15px;font-weight:700;color:#3B6D11;">¥'+rankupJpy.toLocaleString()+'</span>' +
-            '</div>') +
+          : ('<div style="display:flex;justify-content:space-between;align-items:center;">' +
+               '<span style="font-size:11px;color:#555;">維持 '+rkBonus.maintPct+'%'+(rkBonus.isRankup?' + アップ '+rkBonus.upPct+'%':'')+'</span>' +
+               '<span style="font-size:15px;font-weight:700;color:#3B6D11;">¥'+rankupJpy.toLocaleString()+'</span>' +
+             '</div>')) +
       '</div>'
     ) : '';
 
@@ -1190,219 +1867,6 @@ renderRevExamples();
 // ===== 報酬計算タブ =====
 let calcRevTotalAgencyJpy = 0;
 
-function getRevLevel(ratio) {
-  for (var i = 0; i < revLevels.length; i++) {
-    if (ratio >= revLevels[i].minRatio) return revLevels[i];
-  }
-  return null;
-}
-
-function calcRevTotal() {
-  var last   = parseD(document.getElementById('rev-total-last').value);
-  var curr   = parseD(document.getElementById('rev-total-curr').value);
-  var resEl  = document.getElementById('rev-total-result');
-  var noneEl = document.getElementById('rev-total-none');
-
-  if (!last || !curr || last <= 0 || curr <= 0) {
-    resEl.style.display  = 'none';
-    noneEl.style.display = 'none';
-    calcRevTotalAgencyJpy = 0;
-    return;
-  }
-
-  var ratio  = curr / last;
-  var lvObj  = getRevLevel(ratio);
-
-  if (!lvObj) {
-    resEl.style.display  = 'none';
-    noneEl.style.display = 'block';
-    noneEl.textContent   = '先月比 ' + (ratio * 100).toFixed(1) + '% — レベニュー対象外（100%未満）';
-    calcRevTotalAgencyJpy = 0;
-    return;
-  }
-
-  var bonusUsd  = curr * lvObj.rate;
-  var bonusJpy  = bonusUsd * FX;
-  var agencyJpy = bonusJpy / 2 * 0.6;
-  calcRevTotalAgencyJpy = Math.round(agencyJpy);
-
-  noneEl.style.display = 'none';
-  resEl.style.display  = 'block';
-
-  document.getElementById('rev-total-ratio').textContent = (ratio * 100).toFixed(1) + '%';
-  document.getElementById('rev-total-level').innerHTML =
-    '<span style="background:' + lvObj.bg + ';color:' + lvObj.tc + ';padding:2px 10px;border-radius:999px;font-size:12px;font-weight:500;">' +
-    lvObj.label + '</span>';
-  document.getElementById('rev-total-agency').textContent = '¥' + calcRevTotalAgencyJpy.toLocaleString();
-}
-
-
-
-// ===== ランクアップ計算 =====
-var rankThresholds = [0, 100000, 200000, 300000, 500000, 1000000, 1600000, 3000000, 5000000, 8000000];
-var rankColors = ['#f5f5f3','#EAF3DE','#E6F1FB','#E1F5EE','#FFF9E0','#FAEEDA','#FAECE7','#EEEDFE','#F5E9FF','#FFE8E8'];
-var rankTColors= ['#aaa','#3B6D11','#185FA5','#085041','#7A6000','#854F0B','#993C1D','#534AB7','#6B2FA0','#A30000'];
-
-function getDiamondRank(d) {
-  if (!d || d < 0) return 1;
-  for (var i = rankThresholds.length - 1; i >= 0; i--) {
-    if (d >= rankThresholds[i]) return i + 1;
-  }
-  return 1;
-}
-
-function fmtRankDiamond(n) {
-  if (n >= 1000000) return (n/1000000).toFixed(1).replace(/\.?0+$/, '') + 'M';
-  if (n >= 1000)    return (n/1000).toFixed(0) + 'K';
-  return n.toString();
-}
-
-function previewRankup(id) {
-  var prev  = parseD(document.getElementById('lprev-' + id).value);
-  var curr  = parseD(document.getElementById('lcurr-' + id).value);
-  var rdays = parseFloat(document.getElementById('lrdays-' + id).value) || 0;
-  var rhours= parseFloat(document.getElementById('lrhours-' + id).value) || 0;
-  var el    = document.getElementById('rankup-preview-' + id);
-  if (!el) return;
-  if (!prev && !curr) { el.innerHTML = ''; return; }
-
-  var prevRank = getDiamondRank(prev || 0);
-  var currRank = getDiamondRank(curr || 0);
-  var isAdv    = (rdays >= 7 && rhours >= 15);
-  var bonus    = getRankupBonus(prevRank, currRank, isAdv, curr);
-
-  var bgP = rankColors[prevRank-1], tcP = rankTColors[prevRank-1];
-  var bgC = rankColors[currRank-1], tcC = rankTColors[currRank-1];
-
-  // ランク表示
-  var rankHtml =
-    '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">' +
-      '<div style="background:'+bgP+';color:'+tcP+';padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;">R'+prevRank+' (前月)</div>' +
-      (bonus.isRankup
-        ? '<div style="font-size:12px;color:#3B6D11;font-weight:700;">→ R'+currRank+' ▲アップ</div>'
-        : '<div style="font-size:12px;color:#888;">= 維持</div>') +
-      '<div style="background:'+bgC+';color:'+tcC+';padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;">R'+currRank+' (今月)</div>' +
-      '<div style="margin-left:auto;font-size:10px;background:'+(isAdv?'#E6F1FB':'#f0ede8')+';color:'+(isAdv?'#185FA5':'#aaa')+';padding:2px 7px;border-radius:999px;">'+
-        (isAdv ? '⭐ 上級' : 'ベース') +
-      '</div>' +
-    '</div>';
-
-  // ボーナス率表示
-  var bonusHtml =
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">' +
-      '<div style="background:#fff;border-radius:7px;padding:5px 8px;text-align:center;">' +
-        '<div style="font-size:9px;color:#888;margin-bottom:2px;">維持ボーナス</div>' +
-        '<div style="font-size:14px;font-weight:700;color:#3B6D11;">'+bonus.maintPct+'%</div>' +
-      '</div>' +
-      '<div style="background:#fff;border-radius:7px;padding:5px 8px;text-align:center;">' +
-        '<div style="font-size:9px;color:#888;margin-bottom:2px;">アップボーナス</div>' +
-        '<div style="font-size:14px;font-weight:700;color:'+(currRank>prevRank?'#993C1D':'#ccc')+'.">'+bonus.upPct+'%</div>' +
-      '</div>' +
-    '</div>';
-
-  // 計算式: ダイヤ × ボーナス率 × FX × 60%
-  // totalRate: maintPct/upPctは表示用%文字列 → /100して通常%→さらに×0.0001でダイヤ→ドルスケールに
-  // ランクアップ報酬: ダイヤ × rate（正しいスケール） × FX × 60%
-  var totalRate = bonus.maintRate + (bonus.isRankup ? bonus.upRate : 0);
-  var jpyPreview = curr ? Math.round(curr * totalRate * FX * 0.6) : 0;
-  var jpyHtml = curr ? ('<div style="margin-top:5px;background:#fff;border-radius:7px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">' +
-    '<span style="font-size:10px;color:' + (bonus.belowThreshold ? '#993C1D' : '#888') + ';">' + (bonus.belowThreshold ? '⚠ 基準ダイヤ未達 — ボーナス対象外' : 'ランクアップ報酬') + '</span>' +
-    '<span style="font-size:14px;font-weight:700;color:' + (bonus.belowThreshold ? '#ccc' : '#3B6D11') + ';">¥'+jpyPreview.toLocaleString()+'</span>' +
-  '</div>') : '';
-
-  el.innerHTML = rankHtml + bonusHtml + jpyHtml;
-}
-
-// ライバー行リアルタイムLvプレビュー
-function previewLv(id) {
-  var days     = parseFloat(document.getElementById('ldays-' + id).value) || 0;
-  var hours    = parseFloat(document.getElementById('lhours-' + id).value) || 0;
-  var diamonds = parseD(document.getElementById('ldiamond-' + id).value);
-  var preview  = document.getElementById('lv-preview-' + id);
-  if (!preview) return;
-  if (!days && !hours && !diamonds) { preview.innerHTML = ''; return; }
-  var lv = getActiveLv(days, hours, diamonds || 0);
-  var html_str = '<div style="display:flex;align-items:center;gap:6px;padding:5px 2px;">';
-  [1,2,3,4,5].forEach(function(l) {
-    var d = lvData[l];
-    var daysOk  = days  >= d.minDays;
-    var hoursOk = hours >= d.minHours;
-    var diaOk   = diamonds && diamonds >= d.minDiamond;
-    var allOk   = daysOk && hoursOk && diaOk;
-    var isTarget = (l === lv);
-    html_str += '<div style="flex:1;text-align:center;padding:5px 2px;border-radius:7px;' +
-      (isTarget ? 'background:' + lvColors[l-1] + ';' : 'background:#f5f5f3;') + '">' +
-      '<div style="font-size:10px;font-weight:' + (isTarget ? '700' : '500') + ';color:' + (isTarget ? lvTColors[l-1] : '#bbb') + ';">Lv' + l + '</div>' +
-      '<div style="font-size:9px;color:' + (isTarget ? lvTColors[l-1] : '#ccc') + ';margin-top:1px;">' + (isTarget ? '✓ 達成' : (allOk ? '✓' : '–')) + '</div>' +
-    '</div>';
-  });
-  html_str += '</div>';
-  if (lv > 0) {
-    var jpy = Math.round((diamonds||0) * lvData[lv].rateNum * FX);
-    html_str += '<div style="background:' + lvColors[lv-1] + ';border-radius:8px;padding:6px 10px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
-      '<span style="font-size:11px;font-weight:600;color:' + lvTColors[lv-1] + ';">Lv' + lv + ' 確定 ✓</span>' +
-      '<span style="font-size:16px;font-weight:700;color:' + lvTColors[lv-1] + ';">¥' + jpy.toLocaleString() + '</span>' +
-    '</div>';
-  } else if (days || hours || diamonds) {
-    html_str += '<div style="background:#f0ede8;border-radius:8px;padding:6px 10px;margin-top:4px;text-align:center;font-size:11px;color:#aaa;">条件未達（Lv対象外）</div>';
-  }
-  preview.innerHTML = html_str;
-}
-
-
-// ===== レベニューボーナス（事務所収益計算タブ） =====
-var selectedRevRatePct = 2;
-
-function selectRevRate(pct) {
-  selectedRevRatePct = pct;
-  var rates = [2,3,6,8,10,12,15];
-  rates.forEach(function(r) {
-    var btn = document.getElementById('rrate-btn-' + r);
-    if (!btn) return;
-    if (r === pct) {
-      btn.style.background = '#E1F5EE';
-      btn.style.color      = '#085041';
-      btn.style.border     = '0.5px solid #9FE1CB';
-    } else {
-      btn.style.background = '#f0ede8';
-      btn.style.color      = '#666';
-      btn.style.border     = '0.5px solid #ccc';
-    }
-  });
-  calcRevBonus();
-}
-
-function calcRevBonus() {
-  var diamonds = parseD(document.getElementById('rev-bonus-diamond').value);
-  var resEl    = document.getElementById('rev-bonus-result');
-  if (!diamonds || diamonds <= 0) { resEl.style.display = 'none'; return; }
-  // ダイヤ × rate × FX × 60%（ランクアップと同じ計算式）
-  // ダイヤ × ボーナス率 ÷ 100 × FX ÷ 2 × 60%
-  var rate     = selectedRevRatePct / 100;
-  var bonusUsd = diamonds * rate / 100;
-  var bonusJpy = bonusUsd * FX / 2 * 0.6;
-  resEl.style.display = 'block';
-  document.getElementById('rev-bonus-disp').textContent      = fmtD(diamonds) + ' ダイヤ';
-  document.getElementById('rev-bonus-rate-disp').textContent = selectedRevRatePct + '%';
-  document.getElementById('rev-bonus-jpy').textContent       = '¥' + Math.round(bonusJpy).toLocaleString();
-  updateGrandTotal();
-}
-
-function updateGrandTotal() {
-  var activeJpy  = parseInt((document.getElementById('total-active').dataset.val)  || 0);
-  var bonusJpyEl = document.getElementById('rev-bonus-jpy');
-  var bonusJpy   = bonusJpyEl ? parseInt((bonusJpyEl.textContent || '0').replace(/[¥,]/g,'')) || 0 : 0;
-  var grand      = activeJpy + bonusJpy;
-  document.getElementById('total-revenue').textContent = bonusJpy > 0 ? '¥' + bonusJpy.toLocaleString() : '—';
-  document.getElementById('total-jpy').textContent     = grand > 0 ? '¥' + grand.toLocaleString() : '—';
-}
-
-// ===== ライバー別報酬計算 =====
-// 初期化
-showLv(1);
-addLiverRow();
-addLiverRow();
-renderRevExamples();
 
 </script>
 </body>
