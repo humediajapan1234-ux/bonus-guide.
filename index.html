@@ -587,17 +587,7 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
   <div class="section-title">② レベニューボーナス</div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.875rem;margin-bottom:0.75rem;">
     <div style="margin-bottom:10px;">
-      <div style="font-size:11px;color:#888;margin-bottom:5px;">会社全体の獲得ダイヤ数</div>
-      <div class="km-wrap">
-        <input id="rev-bonus-diamond" type="text" placeholder="例: 10M"
-          style="padding:9px 10px;font-size:14px;border:0.5px solid #ccc;border-radius:8px;background:#fafafa;outline:none;"
-          oninput="calcRevBonus()">
-        <button class="km-btn" onclick="appendKM('rev-bonus-diamond','K',calcRevBonus)">K</button>
-        <button class="km-btn" onclick="appendKM('rev-bonus-diamond','M',calcRevBonus)">M</button>
-      </div>
-    </div>
-    <div style="margin-bottom:10px;">
-      <div style="font-size:11px;color:#888;margin-bottom:6px;">ボーナス率を選択</div>
+      <div style="font-size:11px;color:#888;margin-bottom:6px;">ボーナス率を選択　<span style="color:#D85A30;">※ ライバー全体の月次ダイヤ合計に対して適用</span></div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:5px;">
         <button class="rev-rate-btn active" id="rrate-btn-2" onclick="selectRevRate(2)"
           style="padding:7px 4px;font-size:12px;font-weight:600;border:0.5px solid #9FE1CB;border-radius:8px;background:#E1F5EE;color:#085041;cursor:pointer;">2%<br><span style="font-size:9px;font-weight:400;">Lv1</span></button>
@@ -619,7 +609,7 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     </div>
     <div id="rev-bonus-result" style="display:none;background:#f5f5f3;border-radius:8px;padding:10px;">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #e0ddd8;">
-        <span style="font-size:12px;color:#666;">獲得ダイヤ</span>
+        <span style="font-size:12px;color:#666;">ライバー合計ダイヤ</span>
         <span id="rev-bonus-disp" style="font-size:13px;font-weight:600;color:#1a1a1a;"></span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid #e0ddd8;">
@@ -627,7 +617,7 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
         <span id="rev-bonus-rate-disp" style="font-size:13px;font-weight:600;color:#854F0B;"></span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0 3px;">
-        <span style="font-size:12px;color:#854F0B;font-weight:600;">レベニューボーナス（60%）</span>
+        <span style="font-size:12px;color:#854F0B;font-weight:600;">レベニューボーナス</span>
         <span id="rev-bonus-jpy" style="font-size:18px;font-weight:700;color:#854F0B;"></span>
       </div>
     </div>
@@ -664,6 +654,14 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
 </div>
 
 <script>
+// 入力変動時の自動再計算（デバウンス付き）
+var autoCalcTimer = null;
+function autoCalcAll() {
+  clearTimeout(autoCalcTimer);
+  autoCalcTimer = setTimeout(function() { calcAll(); }, 400);
+}
+
+var grandTotalDiamonds = 0; // ライバー合計ダイヤ（グローバル）
 // ランクアップページ: Lvボタン押下でランク維持の円換算を表示
 var lvData_rates = [0.0002, 0.0003, 0.0004, 0.0005, 0.0006]; // Lv1〜5
 
@@ -911,9 +909,9 @@ function getRankupBonus(prevRank, currRank, isAdvanced, currDiamonds) {
     // prevRank === 10 はアップなし（upBase/upAdv = 0のまま）
   }
 
-  // アップ時は維持=0、維持時はアップ=0（排他適用）
-  var appliedMaint = isRankup ? 0 : (isAdvanced ? maintAdv : maintBase);
-  var appliedUp    = isRankup ? (isAdvanced ? upAdv : upBase) : 0;
+  // 上級のみ版: ベース条件は0%、上級条件（7日+15h）のみ有効
+  var appliedMaint = isRankup ? 0 : (isAdvanced ? maintAdv : 0);
+  var appliedUp    = isRankup ? (isAdvanced ? upAdv : 0) : 0;
 
   return {
     maintRate: appliedMaint,
@@ -957,8 +955,7 @@ function previewRankup(id) {
         : '<div style="font-size:12px;color:#888;">= 維持</div>') +
       '<div style="background:'+bgC+';color:'+tcC+';padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;">R'+currRank+' (今月)</div>' +
       '<div style="margin-left:auto;font-size:10px;background:'+(isAdv?'#E6F1FB':'#f0ede8')+';color:'+(isAdv?'#185FA5':'#aaa')+';padding:2px 7px;border-radius:999px;">'+
-        (isAdv ? '⭐ 上級' : 'ベース') +
-      '</div>' +
+        '</div>' +
     '</div>';
 
   // ボーナス率表示
@@ -983,7 +980,7 @@ function previewRankup(id) {
     bonus.belowThreshold
     ? '<div style="margin-top:5px;background:#FAECE7;border-radius:7px;padding:5px 10px;font-size:11px;color:#993C1D;">⚠ 基準ダイヤ未達 — ボーナス 0%</div>'
     : '<div style="margin-top:5px;background:#EAF3DE;border-radius:7px;padding:5px 10px;display:flex;justify-content:space-between;align-items:center;">' +
-        '<span style="font-size:10px;color:#3B6D11;">ランクアップ報酬（60%）</span>' +
+        '<span style="font-size:10px;color:#3B6D11;">ランクアップ報酬</span>' +
         '<span style="font-size:14px;font-weight:700;color:#3B6D11;">¥'+jpyPreview.toLocaleString()+'</span>' +
       '</div>'
   ) : '';
@@ -1051,16 +1048,13 @@ function selectRevRate(pct) {
 }
 
 function calcRevBonus() {
-  var diamonds = parseD(document.getElementById('rev-bonus-diamond').value);
-  var resEl    = document.getElementById('rev-bonus-result');
-  if (!diamonds || diamonds <= 0) { resEl.style.display = 'none'; return; }
-  // ダイヤ × rate × FX × 60%（ランクアップと同じ計算式）
-  // ダイヤ × ボーナス率 ÷ 100 × FX ÷ 2 × 60%
+  var resEl = document.getElementById('rev-bonus-result');
+  if (!grandTotalDiamonds || grandTotalDiamonds <= 0) { resEl.style.display = 'none'; return; }
   var rate     = selectedRevRatePct / 100;
-  var bonusUsd = diamonds * rate / 100;
+  var bonusUsd = grandTotalDiamonds * rate / 100;
   var bonusJpy = bonusUsd * FX * 0.6;
   resEl.style.display = 'block';
-  document.getElementById('rev-bonus-disp').textContent      = fmtD(diamonds) + ' ダイヤ';
+  document.getElementById('rev-bonus-disp').textContent      = fmtD(grandTotalDiamonds) + ' ダイヤ';
   document.getElementById('rev-bonus-rate-disp').textContent = selectedRevRatePct + '%';
   document.getElementById('rev-bonus-jpy').textContent       = '¥' + Math.round(bonusJpy).toLocaleString();
   updateGrandTotal();
@@ -1211,6 +1205,7 @@ function calcAll() {
     var totalRkRate = rkBonus.maintRate + (rkBonus.isRankup ? rkBonus.upRate : 0);
     var rankupJpy = (r.lcurr && !rkBonus.belowThreshold) ? Math.round(r.lcurr * totalRkRate * FX * 0.6) : 0;
     grandActive += rankupJpy;
+    grandTotalDiamonds += (r.diamonds || 0);
     var bgRkP = rankColors[prevRk-1], tcRkP = rankTColors[prevRk-1];
     var bgRkC = rankColors[currRk-1], tcRkC = rankTColors[currRk-1];
     var rankupHtml = (r.prev || r.lcurr) ? (
@@ -1220,7 +1215,6 @@ function calcAll() {
           '<div style="background:'+bgRkP+';color:'+tcRkP+';padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;">R'+prevRk+' (前月)</div>' +
           (rkBonus.isRankup ? '<div style="font-size:11px;color:#3B6D11;font-weight:700;">→ R'+currRk+' ▲アップ</div>' : '<div style="font-size:11px;color:#888;">= 維持</div>') +
           '<div style="background:'+bgRkC+';color:'+tcRkC+';padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;">R'+currRk+' (今月)</div>' +
-          '<div style="margin-left:auto;font-size:10px;background:'+(isAdvR?'#E6F1FB':'#f0ede8')+';color:'+(isAdvR?'#185FA5':'#aaa')+';padding:1px 6px;border-radius:999px;">'+(isAdvR?'⭐ 上級':'ベース')+'</div>' +
         '</div>' +
         (rkBonus.belowThreshold
           ? '<div style="font-size:11px;color:#993C1D;background:#FAECE7;border-radius:6px;padding:4px 8px;">⚠ 基準ダイヤ未達 — ボーナス 0%</div>'
@@ -1256,6 +1250,7 @@ function calcAll() {
   var taEl = document.getElementById('total-active');
   taEl.textContent = '¥' + grandActive.toLocaleString();
   taEl.dataset.val = grandActive;
+  calcRevBonus(); // ライバー合計ダイヤが確定したのでレベニューを再計算
   updateGrandTotal();
   document.getElementById('total-revenue').textContent = revAgencyJpy > 0
     ? '¥' + revAgencyJpy.toLocaleString()
@@ -1267,12 +1262,25 @@ function clearAll() {
   document.getElementById('liver-rows').innerHTML = '';
   liverCount = 0;
   document.getElementById('multi-result').style.display = 'none';
-  ['rev-bonus-diamond','goal-diamond','goal-reward'].forEach(function(id) {
-    document.getElementById(id).value = '';
+  grandTotalDiamonds = 0;
+  // 総報酬額をリセット
+  var taEl = document.getElementById('total-active');
+  if (taEl) { taEl.textContent = '—'; taEl.dataset.val = 0; }
+  var trEl = document.getElementById('total-revenue');
+  if (trEl) trEl.textContent = '—';
+  var tjEl = document.getElementById('total-jpy');
+  if (tjEl) tjEl.textContent = '—';
+  calcRevBonus();
+  ['goal-diamond','goal-reward'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.value = '';
   });
-  document.getElementById('rev-total-result').style.display = 'none';
-  document.getElementById('rev-total-none').style.display   = 'none';
-  document.getElementById('goal-result').style.display      = 'none';
+  var rtr = document.getElementById('rev-total-result');
+  var rtn = document.getElementById('rev-total-none');
+  var gr  = document.getElementById('goal-result');
+  if (rtr) rtr.style.display = 'none';
+  if (rtn) rtn.style.display = 'none';
+  if (gr)  gr.style.display  = 'none';
   calcRevTotalAgencyJpy = 0;
   addLiverRow();
   addLiverRow();
