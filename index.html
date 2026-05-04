@@ -138,32 +138,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
   </div>
   <div class="section-title">ランク別ボーナス一覧</div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-1">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#f5f5f3;color:#aaa;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R1</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 1</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：0K</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 1　<span style="font-size:12px;font-weight:500;color:#555;">基準：0</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：0 〜 100K 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">0K未満（0ダイヤ）</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">0（常に適用）</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
         <div style="font-size:9px;color:#aaa;line-height:1.4;margin-bottom:0;">対象外</div>
         
       </div>
-      <!-- ランクアップ -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">6.5%</div>
-        <div style="font-size:9px;color:#aaa;line-height:1.4;margin-bottom:5px;">100K 〜 99K</div>
+        <div style="font-size:9px;color:#aaa;line-height:1.4;margin-bottom:5px;">1K 〜 200K 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(1,1,'up')" id="rak-up-1-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(1,2,'up')" id="rak-up-1-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(1,3,'up')" id="rak-up-1-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(1,4,'up')" id="rak-up-1-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(1,5,'up')" id="rak-up-1-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -171,32 +168,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-2">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#EAF3DE;color:#3B6D11;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R2</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 2</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：100K</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 2　<span style="font-size:12px;font-weight:500;color:#555;">基準：100K</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：100K 〜 200K 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">100K未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">100K 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
         <div style="font-size:9px;color:#aaa;line-height:1.4;margin-bottom:0;">対象外</div>
         
       </div>
-      <!-- ランクアップ -->
       <div style="background:#EAF3DE;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#3B6D11;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#3B6D11;margin-bottom:4px;">6.5%</div>
-        <div style="font-size:9px;color:#3B6D11;line-height:1.4;margin-bottom:5px;">200K 〜 199K</div>
+        <div style="font-size:9px;color:#3B6D11;line-height:1.4;margin-bottom:5px;">200K 〜 300K 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(2,1,'up')" id="rak-up-2-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(2,2,'up')" id="rak-up-2-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(2,3,'up')" id="rak-up-2-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(2,4,'up')" id="rak-up-2-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(2,5,'up')" id="rak-up-2-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -204,32 +198,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-3">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#E6F1FB;color:#185FA5;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R3</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 3</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：200K</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 3　<span style="font-size:12px;font-weight:500;color:#555;">基準：200K</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：200K 〜 300K 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">200K未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">200K 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#E6F1FB;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#185FA5;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#185FA5;margin-bottom:4px;">2.5%</div>
-        <div style="font-size:9px;color:#185FA5;line-height:1.4;margin-bottom:5px;">200K 〜 299K</div>
+        <div style="font-size:9px;color:#185FA5;line-height:1.4;margin-bottom:5px;">200K 〜 300K 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(3,1,'maint')" id="rak-maint-3-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(3,2,'maint')" id="rak-maint-3-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(3,3,'maint')" id="rak-maint-3-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(3,4,'maint')" id="rak-maint-3-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(3,5,'maint')" id="rak-maint-3-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#E6F1FB;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#185FA5;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#185FA5;margin-bottom:4px;">4.5%</div>
-        <div style="font-size:9px;color:#185FA5;line-height:1.4;margin-bottom:5px;">300K 〜 299K</div>
+        <div style="font-size:9px;color:#185FA5;line-height:1.4;margin-bottom:5px;">300K 〜 500K 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(3,1,'up')" id="rak-up-3-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(3,2,'up')" id="rak-up-3-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(3,3,'up')" id="rak-up-3-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(3,4,'up')" id="rak-up-3-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(3,5,'up')" id="rak-up-3-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -237,32 +228,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-4">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#E1F5EE;color:#085041;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R4</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 4</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：300K</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 4　<span style="font-size:12px;font-weight:500;color:#555;">基準：300K</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：300K 〜 500K 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">300K未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">300K 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#E1F5EE;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#085041;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#085041;margin-bottom:4px;">2.5%</div>
-        <div style="font-size:9px;color:#085041;line-height:1.4;margin-bottom:5px;">300K 〜 499K</div>
+        <div style="font-size:9px;color:#085041;line-height:1.4;margin-bottom:5px;">300K 〜 500K 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(4,1,'maint')" id="rak-maint-4-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(4,2,'maint')" id="rak-maint-4-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(4,3,'maint')" id="rak-maint-4-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(4,4,'maint')" id="rak-maint-4-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(4,5,'maint')" id="rak-maint-4-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#E1F5EE;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#085041;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#085041;margin-bottom:4px;">4.5%</div>
-        <div style="font-size:9px;color:#085041;line-height:1.4;margin-bottom:5px;">500K 〜 499K</div>
+        <div style="font-size:9px;color:#085041;line-height:1.4;margin-bottom:5px;">500K 〜 1M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(4,1,'up')" id="rak-up-4-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(4,2,'up')" id="rak-up-4-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(4,3,'up')" id="rak-up-4-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(4,4,'up')" id="rak-up-4-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(4,5,'up')" id="rak-up-4-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -270,32 +258,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-5">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#FFF9E0;color:#7A6000;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R5</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 5</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：500K</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 5　<span style="font-size:12px;font-weight:500;color:#555;">基準：500K</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：500K 〜 1M 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">500K未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">500K 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#FFF9E0;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#7A6000;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#7A6000;margin-bottom:4px;">2.5%</div>
-        <div style="font-size:9px;color:#7A6000;line-height:1.4;margin-bottom:5px;">500K 〜 999K</div>
+        <div style="font-size:9px;color:#7A6000;line-height:1.4;margin-bottom:5px;">500K 〜 1M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(5,1,'maint')" id="rak-maint-5-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(5,2,'maint')" id="rak-maint-5-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(5,3,'maint')" id="rak-maint-5-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(5,4,'maint')" id="rak-maint-5-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(5,5,'maint')" id="rak-maint-5-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#FFF9E0;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#7A6000;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#7A6000;margin-bottom:4px;">4.5%</div>
-        <div style="font-size:9px;color:#7A6000;line-height:1.4;margin-bottom:5px;">1M 〜 999K</div>
+        <div style="font-size:9px;color:#7A6000;line-height:1.4;margin-bottom:5px;">1M 〜 1.6M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(5,1,'up')" id="rak-up-5-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(5,2,'up')" id="rak-up-5-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(5,3,'up')" id="rak-up-5-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(5,4,'up')" id="rak-up-5-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(5,5,'up')" id="rak-up-5-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -303,32 +288,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-6">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#FAEEDA;color:#854F0B;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R6</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 6</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：1M</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 6　<span style="font-size:12px;font-weight:500;color:#555;">基準：1M</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：1M 〜 1.6M 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">1M未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">1M 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#FAEEDA;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#854F0B;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#854F0B;margin-bottom:4px;">2.5%</div>
-        <div style="font-size:9px;color:#854F0B;line-height:1.4;margin-bottom:5px;">1M 〜 1M</div>
+        <div style="font-size:9px;color:#854F0B;line-height:1.4;margin-bottom:5px;">1M 〜 1.6M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(6,1,'maint')" id="rak-maint-6-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(6,2,'maint')" id="rak-maint-6-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(6,3,'maint')" id="rak-maint-6-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(6,4,'maint')" id="rak-maint-6-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(6,5,'maint')" id="rak-maint-6-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#FAEEDA;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#854F0B;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#854F0B;margin-bottom:4px;">4.5%</div>
-        <div style="font-size:9px;color:#854F0B;line-height:1.4;margin-bottom:5px;">1M 〜 1M</div>
+        <div style="font-size:9px;color:#854F0B;line-height:1.4;margin-bottom:5px;">1.6M 〜 3M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(6,1,'up')" id="rak-up-6-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(6,2,'up')" id="rak-up-6-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(6,3,'up')" id="rak-up-6-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(6,4,'up')" id="rak-up-6-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(6,5,'up')" id="rak-up-6-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -336,32 +318,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-7">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#FAECE7;color:#993C1D;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R7</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 7</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：1M</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 7　<span style="font-size:12px;font-weight:500;color:#555;">基準：1.6M</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：1.6M 〜 3M 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">1M未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">1.6M 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#FAECE7;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#993C1D;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#993C1D;margin-bottom:4px;">2.5%</div>
-        <div style="font-size:9px;color:#993C1D;line-height:1.4;margin-bottom:5px;">1M 〜 2M</div>
+        <div style="font-size:9px;color:#993C1D;line-height:1.4;margin-bottom:5px;">1.6M 〜 3M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(7,1,'maint')" id="rak-maint-7-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(7,2,'maint')" id="rak-maint-7-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(7,3,'maint')" id="rak-maint-7-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(7,4,'maint')" id="rak-maint-7-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(7,5,'maint')" id="rak-maint-7-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#FAECE7;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#993C1D;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#993C1D;margin-bottom:4px;">4.5%</div>
-        <div style="font-size:9px;color:#993C1D;line-height:1.4;margin-bottom:5px;">3M 〜 2M</div>
+        <div style="font-size:9px;color:#993C1D;line-height:1.4;margin-bottom:5px;">3M 〜 5M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(7,1,'up')" id="rak-up-7-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(7,2,'up')" id="rak-up-7-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(7,3,'up')" id="rak-up-7-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(7,4,'up')" id="rak-up-7-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(7,5,'up')" id="rak-up-7-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -369,32 +348,29 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-8">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#EEEDFE;color:#534AB7;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R8</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 8</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：3M</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 8　<span style="font-size:12px;font-weight:500;color:#555;">基準：3M</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：3M 〜 5M 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">3M未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">3M 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#EEEDFE;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#534AB7;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#534AB7;margin-bottom:4px;">2.0%</div>
-        <div style="font-size:9px;color:#534AB7;line-height:1.4;margin-bottom:5px;">3M 〜 4M</div>
+        <div style="font-size:9px;color:#534AB7;line-height:1.4;margin-bottom:5px;">3M 〜 5M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(8,1,'maint')" id="rak-maint-8-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(8,2,'maint')" id="rak-maint-8-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(8,3,'maint')" id="rak-maint-8-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(8,4,'maint')" id="rak-maint-8-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(8,5,'maint')" id="rak-maint-8-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#EEEDFE;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#534AB7;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#534AB7;margin-bottom:4px;">3.0%</div>
-        <div style="font-size:9px;color:#534AB7;line-height:1.4;margin-bottom:5px;">5M 〜 4M</div>
+        <div style="font-size:9px;color:#534AB7;line-height:1.4;margin-bottom:5px;">5M 〜 8M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(8,1,'up')" id="rak-up-8-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(8,2,'up')" id="rak-up-8-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(8,3,'up')" id="rak-up-8-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(8,4,'up')" id="rak-up-8-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(8,5,'up')" id="rak-up-8-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
     </div>
@@ -402,28 +378,25 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-9">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#F5E9FF;color:#6B2FA0;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R9</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 9</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：5M</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 9　<span style="font-size:12px;font-weight:500;color:#555;">基準：5M</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：5M 〜 8M 未満</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">5M未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">5M 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#F5E9FF;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#6B2FA0;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#6B2FA0;margin-bottom:4px;">2.0%</div>
-        <div style="font-size:9px;color:#6B2FA0;line-height:1.4;margin-bottom:5px;">5M 〜 7M</div>
+        <div style="font-size:9px;color:#6B2FA0;line-height:1.4;margin-bottom:5px;">5M 〜 8M 未満</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(9,1,'maint')" id="rak-maint-9-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(9,2,'maint')" id="rak-maint-9-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(9,3,'maint')" id="rak-maint-9-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(9,4,'maint')" id="rak-maint-9-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(9,5,'maint')" id="rak-maint-9-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#F5E9FF;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#6B2FA0;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#6B2FA0;margin-bottom:4px;">3.0%</div>
@@ -435,28 +408,25 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     
   </div>
   <div style="background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:0.75rem 1rem;margin-bottom:0.5rem;" id="rank-card-10">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
       <div style="background:#FFE8E8;color:#A30000;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">R10</div>
       <div>
-        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 10</div>
-        <div style="font-size:12px;color:#555;">基準ダイヤ：8M</div>
+        <div style="font-size:13px;font-weight:600;color:#1a1a1a;">ランク 10　<span style="font-size:12px;font-weight:500;color:#555;">基準：8M</span></div>
+        <div style="font-size:11px;color:#888;">先月ダイヤ：8M 以上</div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:28% 1fr 1fr;gap:5px;margin-bottom:6px;">
-      <!-- 未達 -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">未達</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%</div>
-        <div style="font-size:9px;color:#bbb;line-height:1.4;">8M未満</div>
+        <div style="font-size:9px;color:#bbb;line-height:1.4;">8M 未満</div>
       </div>
-      <!-- ランク維持 -->
       <div style="background:#FFE8E8;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#A30000;margin-bottom:3px;">ランク維持</div>
         <div style="font-size:15px;font-weight:700;color:#A30000;margin-bottom:4px;">2.0%</div>
         <div style="font-size:9px;color:#A30000;line-height:1.4;margin-bottom:5px;">8M 以上</div>
         <div style="display:flex;gap:3px;"><button onclick="showRankLvResult(10,1,'maint')" id="rak-maint-10-1" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv1</button><button onclick="showRankLvResult(10,2,'maint')" id="rak-maint-10-2" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv2</button><button onclick="showRankLvResult(10,3,'maint')" id="rak-maint-10-3" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv3</button><button onclick="showRankLvResult(10,4,'maint')" id="rak-maint-10-4" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv4</button><button onclick="showRankLvResult(10,5,'maint')" id="rak-maint-10-5" style="flex:1;padding:6px 2px;font-size:10px;font-weight:600;border:0.5px solid #ddd;border-radius:7px;background:#fff;color:#555;cursor:pointer;min-width:0;">Lv5</button></div>
       </div>
-      <!-- ランクアップ -->
       <div style="background:#f5f5f3;border-radius:8px;padding:7px 8px;">
         <div style="font-size:9px;color:#aaa;margin-bottom:3px;">ランクアップ</div>
         <div style="font-size:15px;font-weight:700;color:#aaa;margin-bottom:4px;">0%（上限）</div>
@@ -470,16 +440,16 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
 
   <div class="section-title">具体例</div>
   <div class="card">
-    <div class="card-row">
-      <span class="card-label">前月 200K（ランク3） → 当月 200K達成</span>
-      <span class="card-val accent">維持ボーナス適用</span>
+    <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:3px;">
+      <span class="card-label">前月 200K（ランク3） → 当月 200K〜300K未満達成</span>
+      <span class="card-val accent">→ 維持ボーナス 2.5%</span>
     </div>
-    <div class="card-row">
-      <span class="card-label">さらに 300K以上到達 → ランク4へ昇格</span>
-      <span class="card-val accent">アップボーナス適用</span>
+    <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:3px;">
+      <span class="card-label">前月 200K（ランク3） → 当月 300K以上達成</span>
+      <span class="card-val accent">→ アップボーナス 4.5%</span>
     </div>
   </div>
-  <p class="note">※ ランクアップは「次のランク閾値以上のダイヤ数」を当月に獲得した場合に適用。</p>
+  <p class="note">※ ランクアップは当月ダイヤが次のランク閾値以上になった場合に適用。</p>
 </div>
 
 <div id="active" class="page">
