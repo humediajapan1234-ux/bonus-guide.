@@ -995,7 +995,7 @@ function previewRankup(id) {
 function previewLv(id) {
   var days     = parseFloat(document.getElementById('ldays-' + id).value) || 0;
   var hours    = parseFloat(document.getElementById('lhours-' + id).value) || 0;
-  var diamonds = parseD(document.getElementById('ldiamond-' + id).value);
+  var diamonds = parseD(document.getElementById('lcurr-' + id).value);
   var preview  = document.getElementById('lv-preview-' + id);
   if (!preview) return;
   if (!days && !hours && !diamonds) { preview.innerHTML = ''; return; }
@@ -1108,8 +1108,8 @@ function addLiverRow() {
           '<div style="font-size:10px;color:#888;margin-bottom:3px;">当月ダイヤ数</div>' +
           '<div class="km-wrap">' +
             '<input type="text" placeholder="例: 500K" id="lcurr-' + id + '" oninput="previewRankup(' + id + ')" style="padding:7px 8px;font-size:13px;font-weight:600;border:0.5px solid #9FE1CB;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
-            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'K\',function(){previewRankup(' + id + ')})">K</button>' +
-            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'M\',function(){previewRankup(' + id + ')})">M</button>' +
+            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'K\',function(){previewRankup(' + id + ');previewLv(' + id + ')})">K</button>' +
+            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'M\',function(){previewRankup(' + id + ');previewLv(' + id + ')})">M</button>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -1124,14 +1124,7 @@ function addLiverRow() {
         '</div>' +
       '</div>' +
       '<div style="margin-bottom:5px;">' +
-        '<div style="font-size:10px;color:#888;margin-bottom:3px;">当月ダイヤ数（アクティブ用 ※ランクアップと同じなら同じ値を入力）</div>' +
-        '<div class="km-wrap">' +
-          '<input type="text" placeholder="例: 1.2M" id="ldiamond-' + id + '" oninput="previewLv(' + id + ');previewRankup(' + id + ')" style="padding:7px 8px;font-size:13px;font-weight:600;border:0.5px solid #ccc;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
-          '<button class="km-btn" onclick="appendKM(\'ldiamond-' + id + '\',\'K\',function(){previewLv(' + id + ');previewRankup(' + id + ')})">K</button>' +
-          '<button class="km-btn" onclick="appendKM(\'ldiamond-' + id + '\',\'M\',function(){previewLv(' + id + ');previewRankup(' + id + ')})">M</button>' +
-        '</div>' +
       '</div>' +
-    '</div>' +
     '<div style="margin-top:5px;">' +
       '<div id="rankup-preview-' + id + '"></div>' +
       '<div id="lv-preview-' + id + '"></div>' +
@@ -1151,7 +1144,7 @@ function calcAll() {
     const rowId    = row.id.replace('liver-row-', '');
     const name     = (document.getElementById('lname-' + rowId).value || '').trim() || 'ライバー' + rowId;
     const tikId    = (document.getElementById('lid-' + rowId).value || '').trim();
-    const diamonds = parseD(document.getElementById('ldiamond-' + rowId).value);
+    const diamonds = parseD(document.getElementById('lcurr-' + rowId).value);
     const days     = parseFloat(document.getElementById('ldays-' + rowId).value) || 0;
     const hours    = parseFloat(document.getElementById('lhours-' + rowId).value) || 0;
     var prev   = parseD((document.getElementById('lprev-'   + rowId)||{}).value);
