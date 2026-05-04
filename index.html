@@ -438,18 +438,7 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
     <div style="font-size:10px;color:#aaa;margin-top:4px;">※ランク10はランクアップ対象外</div>
   </div>
 
-  <div class="section-title">具体例</div>
-  <div class="card">
-    <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:3px;">
-      <span class="card-label">前月 200K（ランク3） → 当月 200K〜300K未満達成</span>
-      <span class="card-val accent">→ 維持ボーナス 2.5%</span>
-    </div>
-    <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:3px;">
-      <span class="card-label">前月 200K（ランク3） → 当月 300K以上達成</span>
-      <span class="card-val accent">→ アップボーナス 4.5%</span>
-    </div>
-  </div>
-  <p class="note">※ ランクアップは当月ダイヤが次のランク閾値以上になった場合に適用。</p>
+
 </div>
 
 <div id="active" class="page">
@@ -679,45 +668,58 @@ h1 { font-size: 15px; font-weight: 500; color: #1a1a1a; margin-bottom: 0.25rem; 
 var lvData_rates = [0.0002, 0.0003, 0.0004, 0.0005, 0.0006]; // Lv1〜5
 
 function showRankLvResult(rank, lv, kind) {
-  var thresholds  = [0,100000,200000,300000,500000,1000000,1600000,3000000,5000000,8000000];
-  var maintRates  = [0,0,0,0.00025,0.00025,0.00025,0.00025,0.00025,0.00020,0.00020,0.00020];
-  var upRates     = [0,0.00065,0.00065,0.00045,0.00045,0.00045,0.00045,0.00045,0.00030,0.00030,0];
-  var d = thresholds[rank - 1] || 0;
-  // アップの場合は次のランク閾値のダイヤで計算
-  var dUp = rank < 10 ? thresholds[rank] : d;
-  var maintRate = maintRates[rank] || 0;
-  var upRate    = upRates[rank]    || 0;
-  var lvRate    = lvData_rates[lv - 1] || 0.0002;
-  var isUp      = (kind === 'up');
-  var bonusRate = isUp ? upRate : maintRate;
-  var baseDia   = isUp ? dUp : d;
-  var bonusJpy  = Math.round(baseDia * bonusRate * FX * 0.6);
+  // ランク閾値・ボーナス率の定義
+  var thresholds = [0,100000,200000,300000,500000,1000000,1600000,3000000,5000000,8000000];
+  var maintRates = [0,0,0,0.00025,0.00025,0.00025,0.00025,0.00025,0.00020,0.00020,0.00020];
+  var upRates    = [0,0.00065,0.00065,0.00045,0.00045,0.00045,0.00045,0.00045,0.00030,0.00030,0];
+
+  var isUp    = (kind === 'up');
+  // 基準ダイヤ: 維持→現ランク閾値 / アップ→次のランク閾値
+  var baseDia = isUp ? (rank < 10 ? thresholds[rank] : thresholds[rank-1]) : thresholds[rank-1];
+  var bonusRate = isUp ? (upRates[rank] || 0) : (maintRates[rank] || 0);
+
+  // アクティブLvのレート（lvData_ratesはLv1〜5の順）
+  var lvRate = lvData_rates[lv - 1] || 0.0002;
+
+  // アクティブ報酬: baseDia × lvRate × FX × 60%
   var actJpy    = Math.round(baseDia * lvRate * FX * 0.6);
+  // ランクボーナス: baseDia × bonusRate × FX × 60%（アクティブLvに連動して baseDia が変わる）
+  // さらにランクボーナスもアクティブLvのrateNumに比例させる
+  // 計算式: baseDia × lvRate × (bonusRate / 0.0002) × FX × 0.6
+  //  = アクティブ報酬 × (bonusRate / 0.0002)
+  //  ※ 0.0002はLv1の基準レート。Lvが上がるほどランクボーナスも比例して増加
+  var bonusJpy  = Math.round(baseDia * lvRate * (bonusRate / 0.0002) * FX * 0.6);
+  var totalJpy  = actJpy + bonusJpy;
+
   var el = document.getElementById('rak-result-' + rank);
   if (!el) return;
   el.style.display = 'block';
   el.innerHTML =
-    '<div style="font-size:10px;font-weight:600;color:#555;margin-bottom:4px;">' +
-      (isUp ? 'ランクアップ時（次ランク閾値ダイヤ基準）' : 'ランク維持時（現ランク閾値ダイヤ基準）') +
-      '　Lv' + lv +
+    '<div style="font-size:10px;font-weight:600;color:#555;margin-bottom:5px;">' +
+      (isUp ? '▲ ランクアップ時' : '＝ ランク維持時') +
+      '　Lv' + lv + '　基準ダイヤ：' + (baseDia >= 1000000 ? (baseDia/1000000).toFixed(1).replace(/\.?0+$/, '')+'M' : (baseDia/1000).toFixed(0)+'K') +
     '</div>' +
-    '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
-      '<span style="color:#666;">アクティブ Lv' + lv + ' 報酬</span>' +
-      '<span style="font-weight:600;">¥' + actJpy.toLocaleString() + '</span>' +
+    '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid #eee;">' +
+      '<span style="font-size:11px;color:#666;">アクティブ Lv' + lv + ' 報酬</span>' +
+      '<span style="font-size:12px;font-weight:600;color:#1a1a1a;">¥' + actJpy.toLocaleString() + '</span>' +
     '</div>' +
-    '<div style="display:flex;justify-content:space-between;">' +
-      '<span style="color:#666;">' + (isUp ? 'ランクアップ' : 'ランク維持') + 'ボーナス</span>' +
-      '<span style="font-weight:600;color:#3B6D11;">¥' + bonusJpy.toLocaleString() + '</span>' +
+    '<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid #eee;">' +
+      '<span style="font-size:11px;color:#666;">' + (isUp ? 'ランクアップ' : 'ランク維持') + 'ボーナス</span>' +
+      '<span style="font-size:12px;font-weight:600;color:#3B6D11;">¥' + bonusJpy.toLocaleString() + '</span>' +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-between;padding:4px 0 0;">' +
+      '<span style="font-size:11px;font-weight:600;color:#1a1a1a;">合計</span>' +
+      '<span style="font-size:14px;font-weight:700;color:#D85A30;">¥' + totalJpy.toLocaleString() + '</span>' +
     '</div>';
-  // ボタン色リセット（該当kindのみ）
-  var containerId = isUp ? 'rak-up-' + rank : 'rak-act-' + rank;
+
+  // ボタン色更新
   for (var i = 1; i <= 5; i++) {
     var btn = document.getElementById('rak-' + (isUp ? 'up' : 'maint') + '-' + rank + '-' + i);
     if (!btn) continue;
     if (i === lv) {
       btn.style.background = '#1a1a1a'; btn.style.color = '#fff'; btn.style.border = '0.5px solid #1a1a1a';
     } else {
-      btn.style.background = '#fff'; btn.style.color = '#666'; btn.style.border = '0.5px solid #ccc';
+      btn.style.background = '#fff'; btn.style.color = '#666'; btn.style.border = '0.5px solid #ddd';
     }
   }
 }
