@@ -1013,7 +1013,7 @@ function previewLv(id) {
   });
   html_str += '</div>';
   if (lv > 0) {
-    var jpy = Math.round((diamonds||0) * lvData[lv].rateNum * FX);
+    var jpy = Math.round((diamonds||0) * lvData[lv].rateNum * FX * 0.6);
     html_str += '<div style="background:' + lvColors[lv-1] + ';border-radius:8px;padding:6px 10px;margin-top:4px;display:flex;justify-content:space-between;align-items:center;">' +
       '<span style="font-size:11px;font-weight:600;color:' + lvTColors[lv-1] + ';">Lv' + lv + ' 確定 ✓</span>' +
       '<span style="font-size:16px;font-weight:700;color:' + lvTColors[lv-1] + ';">¥' + jpy.toLocaleString() + '</span>' +
@@ -1102,8 +1102,8 @@ function addLiverRow() {
           '<div style="font-size:10px;color:#888;margin-bottom:3px;">当月ダイヤ数</div>' +
           '<div class="km-wrap">' +
             '<input type="text" placeholder="例: 500K" id="lcurr-' + id + '" oninput="previewRankup(' + id + ')" style="padding:7px 8px;font-size:13px;font-weight:600;border:0.5px solid #9FE1CB;border-radius:8px;background:#fff;outline:none;text-align:center;">' +
-            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'K\',function(){previewRankup(' + id + ');previewLv(' + id + ')})">K</button>' +
-            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'M\',function(){previewRankup(' + id + ');previewLv(' + id + ')})">M</button>' +
+            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'K\',function(){previewRankup(' + id + ');previewLv(' + id + ');autoCalcAll()})">K</button>' +
+            '<button class="km-btn" onclick="appendKM(\'lcurr-' + id + '\',\'M\',function(){previewRankup(' + id + ');previewLv(' + id + ');autoCalcAll()})">M</button>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -1139,9 +1139,9 @@ function calcAll() {
     const rowId    = row.id.replace('liver-row-', '');
     const name     = (document.getElementById('lname-' + rowId).value || '').trim() || 'ライバー' + rowId;
     const tikId    = (document.getElementById('lid-' + rowId).value || '').trim();
-    const diamonds = parseD(document.getElementById('lcurr-' + rowId).value);
-    const days     = parseFloat(document.getElementById('ldays-' + rowId).value) || 0;
-    const hours    = parseFloat(document.getElementById('lhours-' + rowId).value) || 0;
+    const diamonds = parseD((document.getElementById('lcurr-' + rowId)||{}).value) || 0;
+    const days     = parseFloat((document.getElementById('ldays-' + rowId)||{}).value) || 0;
+    const hours    = parseFloat((document.getElementById('lhours-' + rowId)||{}).value) || 0;
     var prev   = parseD((document.getElementById('lprev-'   + rowId)||{}).value);
     var lcurr  = parseD((document.getElementById('lcurr-'   + rowId)||{}).value);
     var rdays  = parseFloat((document.getElementById('ldays-' + rowId)||{}).value) || 0;
